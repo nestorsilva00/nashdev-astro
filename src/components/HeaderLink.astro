@@ -36,15 +36,33 @@ const isActive = href === pathname || href === "/" + (subpath?.[0] || "");
     display: inline-flex;
     align-items: center;
     gap: 0.2em;
+    color: rgb(var(--gray));
+    font-size: 0.875rem;
+    font-weight: 400;
     text-decoration: none;
+    transition: color 150ms ease;
+  }
+  a:hover {
+    color: rgb(var(--black));
   }
   a.is-active {
+    color: rgb(var(--black));
     text-decoration: none;
   }
   .brace {
-    color: var(--accent);
+    color: var(--nav-accent, var(--accent));
     font-family:
       ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
     font-weight: 700;
+  }
+  @media (max-width: 640px) {
+    a {
+      width: 100%;
+      padding: 0.5625rem 0.75rem;
+      border-radius: 0.5625rem;
+    }
+    a:hover {
+      background: rgb(var(--gray-light));
+    }
   }
 </style>
