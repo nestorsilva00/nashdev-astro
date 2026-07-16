@@ -1,24 +1,50 @@
 ---
-import type { HTMLAttributes } from 'astro/types';
+import type { HTMLAttributes } from "astro/types";
 
-type Props = HTMLAttributes<'a'>;
+type Props = HTMLAttributes<"a">;
 
 const { href, class: className, ...props } = Astro.props;
-const pathname = Astro.url.pathname.replace(import.meta.env.BASE_URL, '');
+const pathname = Astro.url.pathname.replace(import.meta.env.BASE_URL, "");
 const subpath = pathname.match(/[^\/]+/g);
-const isActive = href === pathname || href === '/' + (subpath?.[0] || '');
+const isActive = href === pathname || href === "/" + (subpath?.[0] || "");
 ---
 
-<a href={href} class:list={[className, { active: isActive }]} {...props}>
-	<slot />
+<a
+  href={href}
+  class:list={[className, { "is-active": isActive }]}
+  aria-current={isActive ? "page" : undefined}
+  {...props}
+>
+  {
+    isActive && (
+      <span class="brace" aria-hidden="true">
+        {"{ "}
+      </span>
+    )
+  }
+  <slot />
+  {
+    isActive && (
+      <span class="brace" aria-hidden="true">
+        {" }"}
+      </span>
+    )
+  }
 </a>
 <style>
-	a {
-		display: inline-block;
-		text-decoration: none;
-	}
-	a.active {
-		font-weight: bolder;
-		text-decoration: underline;
-	}
+  a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.2em;
+    text-decoration: none;
+  }
+  a.is-active {
+    text-decoration: none;
+  }
+  .brace {
+    color: var(--accent);
+    font-family:
+      ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-weight: 700;
+  }
 </style>
