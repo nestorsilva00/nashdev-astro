@@ -1,114 +1,390 @@
 ---
-import { Image } from 'astro:assets';
-import { getCollection } from 'astro:content';
-import BaseHead from '../../components/BaseHead.astro';
-import Footer from '../../components/Footer.astro';
-import FormattedDate from '../../components/FormattedDate.astro';
-import Header from '../../components/Header.astro';
-import { SITE_DESCRIPTION, SITE_TITLE } from '../../consts';
+import { Image } from "astro:assets";
+import { getCollection } from "astro:content";
+import BaseHead from "../../components/BaseHead.astro";
+import Footer from "../../components/Footer.astro";
+import FormattedDate from "../../components/FormattedDate.astro";
+import Header from "../../components/Header.astro";
+import { SITE_DESCRIPTION, SITE_TITLE } from "../../consts";
 
-const posts = (await getCollection('blog')).sort(
-	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
-);
+const WORDS_PER_MINUTE = 200;
+
+const posts = (await getCollection("blog"))
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+  .map((post) => {
+    const wordCount =
+      post.body?.trim().split(/\s+/).filter(Boolean).length ?? 0;
+
+    return {
+      ...post,
+      readingTime: Math.max(1, Math.ceil(wordCount / WORDS_PER_MINUTE)),
+    };
+  });
 ---
 
 <!doctype html>
 <html lang="en">
-	<head>
-		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
-		<style>
-			main {
-				width: 960px;
-			}
-			ul {
-				display: flex;
-				flex-wrap: wrap;
-				gap: 2rem;
-				list-style-type: none;
-				margin: 0;
-				padding: 0;
-			}
-			ul li {
-				width: calc(50% - 1rem);
-			}
-			ul li * {
-				text-decoration: none;
-				transition: 0.2s ease;
-			}
-			ul li:first-child {
-				width: 100%;
-				margin-bottom: 1rem;
-				text-align: center;
-			}
-			ul li:first-child img {
-				width: 100%;
-			}
-			ul li:first-child .title {
-				font-size: 2.369rem;
-			}
-			ul li img {
-				margin-bottom: 0.5rem;
-				border-radius: 12px;
-			}
-			ul li a {
-				display: block;
-			}
-			.title {
-				margin: 0;
-				color: rgb(var(--black));
-				line-height: 1;
-			}
-			.date {
-				margin: 0;
-				color: rgb(var(--gray));
-			}
-			ul li a:hover h4,
-			ul li a:hover .date {
-				color: rgb(var(--accent));
-			}
-			ul a:hover img {
-				box-shadow: var(--box-shadow);
-			}
-			@media (max-width: 720px) {
-				ul {
-					gap: 0.5em;
-				}
-				ul li {
-					width: 100%;
-					text-align: center;
-				}
-				ul li:first-child {
-					margin-bottom: 0;
-				}
-				ul li:first-child .title {
-					font-size: 1.563em;
-				}
-			}
-		</style>
-	</head>
-	<body>
-		<Header />
-		<main>
-			<section>
-				<ul>
-					{
-						posts.map((post) => (
-							<li>
-								<a href={`/blog/${post.id}/`}>
-									{post.data.heroImage && (
-										<Image width={720} height={360} src={post.data.heroImage} alt="" />
-									)}
-									<h4 class="title">{post.data.title}</h4>
-									<p class="date">
-										<FormattedDate date={post.data.pubDate} />
-									</p>
-								</a>
-							</li>
-						))
-					}
-				</ul>
-			</section>
-		</main>
-		<Footer />
-	</body>
+  <head>
+    <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+    <style>
+      main {
+        width: 960px;
+      }
+
+      .blog-toolbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        margin-bottom: 2rem;
+      }
+      .blog-toolbar h1 {
+        margin: 0;
+        font-size: clamp(2rem, 5vw, 3rem);
+      }
+      .view-toggle {
+        display: inline-flex;
+        gap: 0.125rem;
+      }
+      .view-button {
+        display: grid;
+        place-items: center;
+        width: 2.25rem;
+        height: 2.25rem;
+        padding: 0;
+        color: rgb(var(--gray));
+        background: transparent;
+        border: 0;
+        border-radius: 50%;
+        cursor: pointer;
+        transition:
+          color 150ms ease,
+          background-color 150ms ease,
+          transform 180ms ease;
+      }
+      .view-button:hover {
+        color: rgb(var(--black));
+        background: rgba(var(--gray-light), 65%);
+        transform: scale(1.08);
+      }
+      .view-button[aria-pressed="true"] {
+        color: #336477;
+        background: color-mix(in srgb, #0e8fb8 8%, transparent);
+      }
+      .view-button:focus-visible {
+        outline: 2px solid var(--accent);
+        outline-offset: 2px;
+      }
+      .view-button svg {
+        width: 1.125rem;
+        height: 1.125rem;
+        fill: none;
+        stroke: currentColor;
+        stroke-width: 1.8;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+      }
+
+      .posts {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+      }
+      .post-link {
+        color: inherit;
+        text-decoration: none;
+        transition:
+          color 180ms ease,
+          border-color 180ms ease,
+          box-shadow 180ms ease,
+          transform 180ms ease;
+      }
+      .post-media {
+        display: block;
+        overflow: hidden;
+        background: rgb(var(--gray-light));
+        border-radius: 12px;
+      }
+      .post-media :global(img) {
+        display: block;
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        object-fit: cover;
+        transition: transform 250ms ease;
+      }
+      .image-placeholder {
+        display: block;
+        width: 100%;
+        height: 100%;
+        min-height: 10rem;
+        background: linear-gradient(135deg, rgb(var(--gray-light)), white);
+      }
+      .post-title {
+        margin: 0;
+        color: rgb(var(--black));
+        line-height: 1.15;
+        transition: color 180ms ease;
+      }
+      .post-meta {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 0.45rem;
+        margin: 0;
+        color: rgb(var(--gray));
+        font-size: 0.875rem;
+        line-height: 1.4;
+      }
+      .meta-separator {
+        color: rgba(var(--gray), 55%);
+      }
+      .post-description {
+        margin: 0;
+        color: rgb(var(--gray-dark));
+        font-size: 0.95rem;
+        line-height: 1.55;
+      }
+      .tag-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.45rem;
+      }
+      .tag-chip {
+        display: inline-flex;
+        align-items: center;
+        min-height: 1.65rem;
+        padding: 0.2rem 0.625rem;
+        color: rgb(var(--gray-dark));
+        background: rgba(var(--gray-light), 70%);
+        border: 0;
+        border-radius: 999px;
+        font-size: 0.75rem;
+        font-weight: 500;
+        line-height: 1;
+      }
+      .post-link:hover .post-title {
+        color: rgb(var(--accent));
+      }
+      .post-link:hover .post-media :global(img) {
+        transform: scale(1.025);
+      }
+
+      /* Grid view keeps the existing two-column card layout. */
+      .posts[data-view="grid"] {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 2rem;
+      }
+      .posts[data-view="grid"] .post-link {
+        display: block;
+      }
+      .posts[data-view="grid"] .post-media {
+        aspect-ratio: 2 / 1;
+        margin-bottom: 0.75rem;
+      }
+      .posts[data-view="grid"] .post-title {
+        font-size: 1.35rem;
+      }
+      .posts[data-view="grid"] .post-meta {
+        margin-top: 0.35rem;
+      }
+      .posts[data-view="grid"] .reading-time,
+      .posts[data-view="grid"] .meta-separator,
+      .posts[data-view="grid"] .post-description,
+      .posts[data-view="grid"] .tag-list {
+        display: none;
+      }
+
+      /* List view uses a 30% image column and a 70% content column. */
+      .posts[data-view="list"] {
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+      }
+      .posts[data-view="list"] .post-item {
+        position: relative;
+        padding: 1.25rem 0;
+      }
+      .posts[data-view="list"] .post-item:first-child {
+        padding-top: 0;
+      }
+
+      .posts[data-view="list"] .post-link {
+        display: grid;
+        grid-template-columns: 30% minmax(0, 1fr);
+        min-height: 12rem;
+      }
+      .posts[data-view="list"] .post-link:hover {
+        transform: none;
+      }
+      .posts[data-view="list"] .post-media {
+        height: 100%;
+        border-radius: 12px;
+      }
+      .posts[data-view="list"] .post-content {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.65rem;
+        padding: 0.25rem 0 0.25rem 1.5rem;
+      }
+      .posts[data-view="list"] .post-title {
+        font-size: clamp(1.35rem, 3vw, 1.75rem);
+      }
+      .posts[data-view="list"] .tag-list {
+        margin-top: auto;
+      }
+
+      @media (max-width: 720px) {
+        .blog-toolbar {
+          margin-bottom: 1.5rem;
+        }
+        .posts[data-view="grid"] {
+          grid-template-columns: 1fr;
+          gap: 1.5rem;
+        }
+        .posts[data-view="list"] .post-link {
+          grid-template-columns: 1fr;
+        }
+        .posts[data-view="list"] .post-item {
+          padding: 1.5rem 0;
+        }
+        .posts[data-view="list"] .post-media {
+          aspect-ratio: 16 / 9;
+        }
+        .posts[data-view="list"] .post-content {
+          padding: 1rem 0.125rem 0;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <Header />
+    <main>
+      <div class="blog-toolbar">
+        <div class="view-toggle" role="group" aria-label="Choose post layout">
+          <button
+            class="view-button"
+            type="button"
+            aria-label="Grid view"
+            aria-pressed="true"
+            title="Grid view"
+            data-view-button="grid"
+          >
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <rect x="3" y="3" width="7" height="7" rx="1"></rect>
+              <rect x="14" y="3" width="7" height="7" rx="1"></rect>
+              <rect x="3" y="14" width="7" height="7" rx="1"></rect>
+              <rect x="14" y="14" width="7" height="7" rx="1"></rect>
+            </svg>
+          </button>
+          <button
+            class="view-button"
+            type="button"
+            aria-label="List view"
+            aria-pressed="false"
+            title="List view"
+            data-view-button="list"
+          >
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <rect x="3" y="4" width="4" height="4" rx="0.75"></rect>
+              <path d="M11 6h10"></path>
+              <rect x="3" y="10" width="4" height="4" rx="0.75"></rect>
+              <path d="M11 12h10"></path>
+              <rect x="3" y="16" width="4" height="4" rx="0.75"></rect>
+              <path d="M11 18h10"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+      <section>
+        <ul class="posts" data-posts data-view="grid">
+          {
+            posts.map((post) => (
+              <li class="post-item">
+                <a class="post-link" href={`/blog/${post.id}/`}>
+                  <div class="post-media">
+                    {post.data.heroImage ? (
+                      <Image
+                        width={720}
+                        height={360}
+                        src={post.data.heroImage}
+                        alt=""
+                      />
+                    ) : (
+                      <span class="image-placeholder" aria-hidden="true" />
+                    )}
+                  </div>
+                  <div class="post-content">
+                    <h2 class="post-title">{post.data.title}</h2>
+                    <div class="post-meta">
+                      <FormattedDate date={post.data.pubDate} />
+                      <span class="meta-separator" aria-hidden="true">
+                        •
+                      </span>
+                      <span class="reading-time">
+                        {post.readingTime} min read
+                      </span>
+                    </div>
+                    <p class="post-description">{post.data.description}</p>
+                    {post.data.tags.length > 0 && (
+                      <div class="tag-list" aria-label="Tags">
+                        {post.data.tags.map((tag) => (
+                          <span class="tag-chip">{tag}</span>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </section>
+    </main>
+    <Footer />
+    <script>
+      const postList = document.querySelector<HTMLElement>("[data-posts]");
+      const viewButtons =
+        document.querySelectorAll<HTMLButtonElement>("[data-view-button]");
+      const storageKey = "blog-post-view";
+
+      const setView = (view: "grid" | "list") => {
+        if (!postList) return;
+
+        postList.dataset.view = view;
+        viewButtons.forEach((button) => {
+          button.setAttribute(
+            "aria-pressed",
+            String(button.dataset.viewButton === view),
+          );
+        });
+
+        try {
+          localStorage.setItem(storageKey, view);
+        } catch {
+          // The selected view still works when storage is unavailable.
+        }
+      };
+
+      let initialView: "grid" | "list" = "grid";
+      try {
+        const savedView = localStorage.getItem(storageKey);
+        if (savedView === "grid" || savedView === "list") {
+          initialView = savedView;
+        }
+      } catch {
+        // Use the default grid view when storage is unavailable.
+      }
+
+      setView(initialView);
+      viewButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+          const view = button.dataset.viewButton;
+          if (view === "grid" || view === "list") setView(view);
+        });
+      });
+    </script>
+  </body>
 </html>
