@@ -141,7 +141,6 @@ const currentSection =
 
 <style>
   header {
-    --nav-accent: #0e8fb8;
     position: sticky;
     z-index: 100;
     top: 1rem;
@@ -161,19 +160,20 @@ const currentSection =
     min-height: 36px;
     margin: 0 auto;
     padding: 0.5625rem 0.75rem 0.5625rem 1rem;
-    background: rgba(255, 255, 255, 0.72);
-    border: 1px solid rgba(255, 255, 255, 0.7);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border-light);
     border-radius: 1rem;
     box-shadow:
-      inset 0 1px rgba(255, 255, 255, 80%),
-      0 0.75rem 2.125rem -1.25rem rgba(var(--black), 45%);
+      inset 0 1px color-mix(in srgb, var(--color-background) 80%, transparent),
+      0 0.75rem 2.125rem -1.25rem
+        color-mix(in srgb, var(--color-text-strong) 45%, transparent);
     backdrop-filter: blur(14px) saturate(140%);
   }
   .terminal-brand {
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    color: rgb(var(--gray));
+    color: var(--color-text-secondary);
     font-family:
       ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
     font-size: 0.875rem;
@@ -186,7 +186,7 @@ const currentSection =
     place-items: center;
     width: 1.375rem;
     height: 1.375rem;
-    color: white;
+    color: var(--color-text-inverse);
     background: linear-gradient(135deg, #21b4e1, #7b6cff);
     border-radius: 0.3125rem;
     font-size: 0.5625rem;
@@ -194,16 +194,16 @@ const currentSection =
     letter-spacing: -0.12em;
   }
   .cwd {
-    color: rgb(var(--gray));
+    color: var(--color-text-secondary);
   }
   .path {
-    color: var(--nav-accent);
+    color: var(--color-accent);
   }
   .cursor {
     width: 0.5rem;
     height: 1rem;
     margin-left: 0.125rem;
-    background: var(--nav-accent);
+    background: var(--color-accent);
     animation: blink 1.05s steps(2, end) infinite;
   }
   @keyframes blink {
@@ -237,7 +237,7 @@ const currentSection =
     width: 2.25rem;
     height: 2.25rem;
     padding: 0;
-    color: rgb(var(--gray));
+    color: var(--color-text-secondary);
     background: transparent;
     border: 0;
     border-radius: 50%;
@@ -249,8 +249,8 @@ const currentSection =
   }
   .social-links a:hover,
   .menu-button:hover {
-    color: rgb(var(--black));
-    background: rgb(var(--gray-light));
+    color: var(--color-text-strong);
+    background: var(--color-surface-hover);
     transform: scale(1.1);
   }
   .social-links svg,
@@ -303,10 +303,11 @@ const currentSection =
       gap: 0.125rem;
       min-width: 11rem;
       padding: 0.4375rem;
-      background: rgba(255, 255, 255, 96%);
-      border: 1px solid rgba(var(--black), 16%);
+      background: var(--color-surface-strong);
+      border: 1px solid var(--color-border-strong);
       border-radius: 0.875rem;
-      box-shadow: 0 1.25rem 3rem -1rem rgba(var(--black), 35%);
+      box-shadow: 0 1.25rem 3rem -1rem
+        color-mix(in srgb, var(--color-text-strong) 35%, transparent);
       backdrop-filter: blur(16px);
     }
     .internal-links.is-open {

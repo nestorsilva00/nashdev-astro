@@ -36,21 +36,21 @@ const isActive = href === pathname || href === "/" + (subpath?.[0] || "");
     display: inline-flex;
     align-items: center;
     gap: 0.2em;
-    color: rgb(var(--gray));
+    color: var(--color-text-secondary);
     font-size: 0.875rem;
     font-weight: 400;
     text-decoration: none;
     transition: color 150ms ease;
   }
   a:hover {
-    color: rgb(var(--black));
+    color: var(--color-text-strong);
   }
   a.is-active {
-    color: #336477;
+    color: var(--color-control-active);
     text-decoration: none;
   }
   .brace {
-    color: var(--nav-accent, var(--accent));
+    color: var(--color-accent);
     font-family:
       ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
     font-weight: 700;
@@ -62,7 +62,7 @@ const isActive = href === pathname || href === "/" + (subpath?.[0] || "");
       border-radius: 0.5625rem;
     }
     a:hover {
-      background: rgb(var(--gray-light));
+      background: var(--color-surface-hover);
     }
   }
 </style>

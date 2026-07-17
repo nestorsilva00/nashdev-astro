@@ -52,7 +52,7 @@ const posts = (await getCollection("blog"))
         width: 2.25rem;
         height: 2.25rem;
         padding: 0;
-        color: rgb(var(--gray));
+        color: var(--color-text-secondary);
         background: transparent;
         border: 0;
         border-radius: 50%;
@@ -63,16 +63,20 @@ const posts = (await getCollection("blog"))
           transform 180ms ease;
       }
       .view-button:hover {
-        color: rgb(var(--black));
-        background: rgba(var(--gray-light), 65%);
+        color: var(--color-text-strong);
+        background: color-mix(
+          in srgb,
+          var(--color-surface-hover) 65%,
+          transparent
+        );
         transform: scale(1.08);
       }
       .view-button[aria-pressed="true"] {
-        color: #336477;
-        background: color-mix(in srgb, #0e8fb8 8%, transparent);
+        color: var(--color-control-active);
+        background: color-mix(in srgb, var(--color-accent) 8%, transparent);
       }
       .view-button:focus-visible {
-        outline: 2px solid var(--accent);
+        outline: 2px solid var(--color-primary);
         outline-offset: 2px;
       }
       .view-button svg {
@@ -102,7 +106,7 @@ const posts = (await getCollection("blog"))
       .post-media {
         display: block;
         overflow: hidden;
-        background: rgb(var(--gray-light));
+        background: var(--color-background-secondary);
         border-radius: 12px;
       }
       .post-media :global(img) {
@@ -118,11 +122,15 @@ const posts = (await getCollection("blog"))
         width: 100%;
         height: 100%;
         min-height: 10rem;
-        background: linear-gradient(135deg, rgb(var(--gray-light)), white);
+        background: linear-gradient(
+          135deg,
+          var(--color-background-secondary),
+          var(--color-background)
+        );
       }
       .post-title {
         margin: 0;
-        color: rgb(var(--black));
+        color: var(--color-text-strong);
         line-height: 1.15;
         transition: color 180ms ease;
       }
@@ -132,16 +140,16 @@ const posts = (await getCollection("blog"))
         flex-wrap: wrap;
         gap: 0.45rem;
         margin: 0;
-        color: rgb(var(--gray));
+        color: var(--color-text-secondary);
         font-size: 0.875rem;
         line-height: 1.4;
       }
       .meta-separator {
-        color: rgba(var(--gray), 55%);
+        color: var(--color-text-muted);
       }
       .post-description {
         margin: 0;
-        color: rgb(var(--gray-dark));
+        color: var(--color-text);
         font-size: 0.95rem;
         line-height: 1.55;
       }
@@ -155,8 +163,12 @@ const posts = (await getCollection("blog"))
         align-items: center;
         min-height: 1.65rem;
         padding: 0.2rem 0.625rem;
-        color: rgb(var(--gray-dark));
-        background: rgba(var(--gray-light), 70%);
+        color: var(--color-text);
+        background: color-mix(
+          in srgb,
+          var(--color-background-secondary) 70%,
+          transparent
+        );
         border: 0;
         border-radius: 999px;
         font-size: 0.75rem;
@@ -164,7 +176,7 @@ const posts = (await getCollection("blog"))
         line-height: 1;
       }
       .post-link:hover .post-title {
-        color: rgb(var(--accent));
+        color: var(--color-primary);
       }
       .post-link:hover .post-media :global(img) {
         transform: scale(1.025);
