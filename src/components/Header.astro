@@ -42,6 +42,38 @@ const currentSection =
         <HeaderLink href="/projects">Projects</HeaderLink>
         <HeaderLink href="/about">About</HeaderLink>
       </div>
+      <button
+        class="theme-toggle"
+        type="button"
+        aria-label="Switch to dark mode"
+        aria-pressed="false"
+        title="Switch to dark mode"
+        data-theme-toggle
+      >
+        <svg
+          class="theme-icon theme-icon-moon"
+          viewBox="0 0 24 24"
+          aria-hidden="true"
+        >
+          <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9"></path>
+        </svg>
+        <svg
+          class="theme-icon theme-icon-sun"
+          viewBox="0 0 24 24"
+          aria-hidden="true"
+        >
+          <circle cx="12" cy="12" r="4"></circle>
+          <path d="M12 2v2"></path>
+          <path d="M12 20v2"></path>
+          <path d="m4.93 4.93 1.41 1.41"></path>
+          <path d="m17.66 17.66 1.41 1.41"></path>
+          <path d="M2 12h2"></path>
+          <path d="M20 12h2"></path>
+          <path d="m6.34 17.66-1.41 1.41"></path>
+          <path d="m19.07 4.93-1.41 1.41"></path>
+        </svg>
+        <span class="sr-only">Toggle color theme</span>
+      </button>
       <div class="social-links">
         <a
           href="https://www.linkedin.com/in/nestorsilvahernandez/"
@@ -83,6 +115,9 @@ const currentSection =
   const menuButton = document.querySelector("[data-menu-button]");
   const menu = document.querySelector("[data-menu]");
   const navRight = document.querySelector(".nav-right");
+  const themeToggle = document.querySelector<HTMLButtonElement>(
+    "[data-theme-toggle]",
+  );
   const currentPath = document.querySelector<HTMLElement>(
     "[data-current-path]",
   );
@@ -119,6 +154,15 @@ const currentSection =
     menuButton?.setAttribute("aria-expanded", "false");
   };
 
+  const updateThemeToggle = () => {
+    const isDark = document.documentElement.dataset.theme === "dark";
+    const nextTheme = isDark ? "light" : "dark";
+
+    themeToggle?.setAttribute("aria-pressed", String(isDark));
+    themeToggle?.setAttribute("aria-label", `Switch to ${nextTheme} mode`);
+    themeToggle?.setAttribute("title", `Switch to ${nextTheme} mode`);
+  };
+
   menuButton?.addEventListener("click", () => {
     const isOpen = menu?.classList.toggle("is-open") ?? false;
     menuButton.setAttribute("aria-expanded", String(isOpen));
@@ -136,6 +180,25 @@ const currentSection =
     }
   });
 
+  themeToggle?.addEventListener("click", () => {
+    const nextTheme =
+      document.documentElement.dataset.theme === "dark" ? "light" : "dark";
+
+    document.documentElement.dataset.theme = nextTheme;
+    document
+      .querySelector<HTMLMetaElement>("[data-theme-color]")
+      ?.setAttribute("content", nextTheme === "dark" ? "#10141e" : "#ffffff");
+
+    try {
+      localStorage.setItem("site-theme", nextTheme);
+    } catch {
+      // The chosen theme still applies when storage is unavailable.
+    }
+
+    updateThemeToggle();
+  });
+
+  updateThemeToggle();
   typeCurrentPath();
 </script>
 
@@ -164,8 +227,8 @@ const currentSection =
     border: 1px solid var(--color-border-light);
     border-radius: 1rem;
     box-shadow:
-      inset 0 1px color-mix(in srgb, var(--color-background) 80%, transparent),
-      0 0.75rem 2.125rem -1.25rem
+      0 1px color-mix(in srgb, var(--color-background) 80%, transparent) inset,
+      0 12px 14px -20px
         color-mix(in srgb, var(--color-text-strong) 45%, transparent);
     backdrop-filter: blur(14px) saturate(140%);
   }
@@ -219,7 +282,7 @@ const currentSection =
   }
   .nav-right {
     position: relative;
-    gap: 1.125rem;
+    gap: 0.7rem;
   }
   .internal-links {
     gap: 1.25rem;
@@ -233,10 +296,10 @@ const currentSection =
     gap: 0.125rem;
   }
   .social-links a,
-  .menu-button {
-    width: 2.25rem;
-    height: 2.25rem;
-    padding: 0;
+  .menu-button,
+  .theme-toggle {
+    width: 2.1rem;
+    height: 2.1rem;
     color: var(--color-text-secondary);
     background: transparent;
     border: 0;
@@ -248,13 +311,15 @@ const currentSection =
       transform 200ms ease;
   }
   .social-links a:hover,
-  .menu-button:hover {
+  .menu-button:hover,
+  .theme-toggle:hover {
     color: var(--color-text-strong);
     background: var(--color-surface-hover);
     transform: scale(1.1);
   }
   .social-links svg,
-  .menu-button svg {
+  .menu-button svg,
+  .theme-toggle svg {
     width: 1.125rem;
     height: 1.125rem;
   }
@@ -268,6 +333,27 @@ const currentSection =
     stroke: currentColor;
     stroke-width: 2;
     stroke-linecap: round;
+  }
+  .theme-toggle svg {
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .theme-toggle {
+    display: grid;
+    place-items: center;
+    line-height: 0;
+  }
+  .theme-icon-sun {
+    display: none;
+  }
+  :global(html[data-theme="dark"]) .theme-icon-moon {
+    display: none;
+  }
+  :global(html[data-theme="dark"]) .theme-icon-sun {
+    display: block;
   }
   @media (prefers-reduced-motion: reduce) {
     .cursor {

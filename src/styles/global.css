@@ -37,12 +37,42 @@
 		0 8px 24px color-mix(in srgb, var(--color-text-secondary) 33%, transparent),
 		0 16px 32px color-mix(in srgb, var(--color-text-secondary) 33%, transparent);
 }
+
+:root[data-theme='dark'] {
+	color-scheme: dark;
+
+	--color-primary: #8ab4ff;
+	--color-accent: #79d4f2;
+	--color-control-active: #9edff1;
+
+	--color-background: #10141e;
+	--color-background-secondary: #242d3e;
+	--color-surface: color-mix(in srgb, #1b2331 86%, transparent);
+	--color-surface-strong: color-mix(in srgb, #202a3a 96%, transparent);
+	--color-surface-hover: #2a3549;
+
+	--color-text: #e5eaf4;
+	--color-text-strong: #f8faff;
+	--color-text-secondary: #adbbd6;
+	--color-text-muted: color-mix(in srgb, var(--color-text-secondary) 55%, transparent);
+	--color-text-inverse: #10141e;
+
+	--color-border: #344158;
+	--color-border-light: color-mix(in srgb, #c5d1e8 16%, transparent);
+	--color-border-strong: color-mix(in srgb, #d9e4f7 25%, transparent);
+
+	--box-shadow:
+		0 2px 6px color-mix(in srgb, #000 30%, transparent),
+		0 8px 24px color-mix(in srgb, #000 38%, transparent),
+		0 16px 32px color-mix(in srgb, #000 34%, transparent);
+}
 body {
 	font-family: var(--font-atkinson);
 	margin: 0;
 	padding: 0;
 	text-align: left;
 	background: linear-gradient(var(--gradient-page-background)) no-repeat;
+	background-color: var(--color-background);
 	background-size: 100% 600px;
 	word-wrap: break-word;
 	overflow-wrap: break-word;
