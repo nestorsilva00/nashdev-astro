@@ -42,38 +42,6 @@ const currentSection =
         <HeaderLink href="/projects">Projects</HeaderLink>
         <HeaderLink href="/about">About</HeaderLink>
       </div>
-      <button
-        class="theme-toggle"
-        type="button"
-        aria-label="Switch to dark mode"
-        aria-pressed="false"
-        title="Switch to dark mode"
-        data-theme-toggle
-      >
-        <svg
-          class="theme-icon theme-icon-moon"
-          viewBox="0 0 24 24"
-          aria-hidden="true"
-        >
-          <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9"></path>
-        </svg>
-        <svg
-          class="theme-icon theme-icon-sun"
-          viewBox="0 0 24 24"
-          aria-hidden="true"
-        >
-          <circle cx="12" cy="12" r="4"></circle>
-          <path d="M12 2v2"></path>
-          <path d="M12 20v2"></path>
-          <path d="m4.93 4.93 1.41 1.41"></path>
-          <path d="m17.66 17.66 1.41 1.41"></path>
-          <path d="M2 12h2"></path>
-          <path d="M20 12h2"></path>
-          <path d="m6.34 17.66-1.41 1.41"></path>
-          <path d="m19.07 4.93-1.41 1.41"></path>
-        </svg>
-        <span class="sr-only">Toggle color theme</span>
-      </button>
       <div class="social-links">
         <a
           href="https://www.linkedin.com/in/nestorsilvahernandez/"
@@ -107,6 +75,38 @@ const currentSection =
           >
         </a>
       </div>
+      <button
+        class="theme-toggle"
+        type="button"
+        aria-label="Switch to dark mode"
+        aria-pressed="false"
+        title="Switch to dark mode"
+        data-theme-toggle
+      >
+        <svg
+          class="theme-icon theme-icon-moon"
+          viewBox="0 0 24 24"
+          aria-hidden="true"
+        >
+          <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9"></path>
+        </svg>
+        <svg
+          class="theme-icon theme-icon-sun"
+          viewBox="0 0 24 24"
+          aria-hidden="true"
+        >
+          <circle cx="12" cy="12" r="4"></circle>
+          <path d="M12 2v2"></path>
+          <path d="M12 20v2"></path>
+          <path d="m4.93 4.93 1.41 1.41"></path>
+          <path d="m17.66 17.66 1.41 1.41"></path>
+          <path d="M2 12h2"></path>
+          <path d="M20 12h2"></path>
+          <path d="m6.34 17.66-1.41 1.41"></path>
+          <path d="m19.07 4.93-1.41 1.41"></path>
+        </svg>
+        <span class="sr-only">Toggle color theme</span>
+      </button>
     </div>
   </nav>
 </header>
@@ -214,6 +214,10 @@ const currentSection =
     font-size: inherit;
   }
   nav {
+    --header-control-size: 2.1rem;
+    --header-icon-gap: 0.125rem;
+    --header-item-gap: 0.75rem;
+
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -279,27 +283,24 @@ const currentSection =
   .social-links {
     display: flex;
     align-items: center;
+    gap: var(--header-item-gap);
   }
   .nav-right {
     position: relative;
-    gap: 0.7rem;
   }
-  .internal-links {
-    gap: 1.25rem;
+  .social-links {
+    gap: var(--header-icon-gap);
   }
   .social-links a {
     display: flex;
     align-items: center;
     justify-content: center;
   }
-  .social-links {
-    gap: 0.125rem;
-  }
   .social-links a,
   .menu-button,
   .theme-toggle {
-    width: 2.1rem;
-    height: 2.1rem;
+    width: var(--header-control-size);
+    height: var(--header-control-size);
     color: var(--color-text-secondary);
     background: transparent;
     border: 0;
@@ -346,6 +347,9 @@ const currentSection =
     place-items: center;
     line-height: 0;
   }
+  .social-links + .theme-toggle {
+    margin-left: calc(var(--header-icon-gap) - var(--header-item-gap));
+  }
   .theme-icon-sun {
     display: none;
   }
@@ -372,8 +376,8 @@ const currentSection =
     .social-links {
       display: none;
     }
-    .nav-right {
-      gap: 0;
+    .social-links + .theme-toggle {
+      margin-left: 0;
     }
     .menu-button {
       display: flex;
@@ -386,7 +390,7 @@ const currentSection =
       display: none;
       flex-direction: column;
       align-items: stretch;
-      gap: 0.125rem;
+      gap: var(--header-item-gap);
       min-width: 11rem;
       padding: 0.4375rem;
       background: var(--color-surface-strong);
