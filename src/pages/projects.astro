@@ -1,48 +1,354 @@
 ---
-import AboutHeroImage from "../assets/blog-placeholder-about.jpg";
-import Layout from "../layouts/BlogPost.astro";
+import { Image } from "astro:assets";
+import ProjectOneImage from "../assets/blog-placeholder-1.jpg";
+import ProjectTwoImage from "../assets/blog-placeholder-2.jpg";
+import ProjectThreeImage from "../assets/blog-placeholder-3.jpg";
+import BaseHead from "../components/BaseHead.astro";
+import Footer from "../components/Footer.astro";
+import Header from "../components/Header.astro";
+import { SITE_DESCRIPTION, SITE_TITLE } from "../consts";
 ---
 
-<Layout
-  title="Projects"
-  description="Lorem ipsum dolor sit amet"
-  pubDate={new Date("August 08 2021")}
-  heroImage={AboutHeroImage}
->
-  <article>
-    <h2>Project 1</h2>
-    <p>
-      Tempus quam pellentesque nec nam aliquam sem. Risus at ultrices mi tempus
-      imperdiet. Id porta nibh venenatis cras sed felis eget velit. Ipsum a arcu
-      cursus vitae. Facilisis magna etiam tempor orci eu lobortis elementum.
-      Tincidunt dui ut ornare lectus sit. Quisque non tellus orci ac. Blandit
-      libero volutpat sed cras. Nec tincidunt praesent semper feugiat nibh sed
-      pulvinar proin gravida. Egestas integer eget aliquet nibh praesent
-      tristique magna.
-    </p>
-  </article>
-  <article>
-    <h2>Project 2</h2>
-    <p>
-      Tempus quam pellentesque nec nam aliquam sem. Risus at ultrices mi tempus
-      imperdiet. Id porta nibh venenatis cras sed felis eget velit. Ipsum a arcu
-      cursus vitae. Facilisis magna etiam tempor orci eu lobortis elementum.
-      Tincidunt dui ut ornare lectus sit. Quisque non tellus orci ac. Blandit
-      libero volutpat sed cras. Nec tincidunt praesent semper feugiat nibh sed
-      pulvinar proin gravida. Egestas integer eget aliquet nibh praesent
-      tristique magna.
-    </p>
-  </article>
-  <article>
-    <h2>Project 3</h2>
-    <p>
-      Tempus quam pellentesque nec nam aliquam sem. Risus at ultrices mi tempus
-      imperdiet. Id porta nibh venenatis cras sed felis eget velit. Ipsum a arcu
-      cursus vitae. Facilisis magna etiam tempor orci eu lobortis elementum.
-      Tincidunt dui ut ornare lectus sit. Quisque non tellus orci ac. Blandit
-      libero volutpat sed cras. Nec tincidunt praesent semper feugiat nibh sed
-      pulvinar proin gravida. Egestas integer eget aliquet nibh praesent
-      tristique magna.
-    </p>
-  </article>
-</Layout>
+<!doctype html>
+<html lang="en">
+  <head>
+    <BaseHead
+      title={`Projects | ${SITE_TITLE}`}
+      description={SITE_DESCRIPTION}
+    />
+    <style>
+      main {
+        width: 960px;
+      }
+
+      h1 {
+        margin-bottom: 2rem;
+        font-size: clamp(2rem, 5vw, 3rem);
+      }
+
+      .projects {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 2rem;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      .project-card {
+        display: flex;
+        flex-direction: column;
+        min-width: 0;
+      }
+
+      .project-media {
+        display: block;
+        overflow: hidden;
+        aspect-ratio: 2 / 1;
+        margin-bottom: 0.75rem;
+        background: var(--color-background-secondary);
+        border-radius: 12px;
+      }
+
+      .project-media :global(img) {
+        display: block;
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        object-fit: cover;
+        transition: transform 250ms ease;
+      }
+
+      .project-card:hover .project-media :global(img) {
+        transform: scale(1.025);
+      }
+
+      .project-details {
+        display: flex;
+        flex: 1;
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .project-title {
+        margin: 0;
+        color: var(--color-text-strong);
+        font-size: 1.35rem;
+        line-height: 1.15;
+      }
+
+      .project-description {
+        margin: 0.55rem 0 0;
+        color: var(--color-text);
+        font-size: 0.95rem;
+        line-height: 1.55;
+      }
+
+      .tag-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.45rem;
+        margin-top: 1rem;
+      }
+
+      .tag-chip {
+        display: inline-flex;
+        align-items: center;
+        min-height: 1.65rem;
+        padding: 0.2rem 0.625rem;
+        color: var(--color-text);
+        background: color-mix(
+          in srgb,
+          var(--color-background-secondary) 70%,
+          transparent
+        );
+        border: 0;
+        border-radius: 999px;
+        font-size: 0.75rem;
+        font-weight: 500;
+        line-height: 1;
+      }
+
+      .project-actions {
+        display: flex;
+        gap: 0.5rem;
+        margin-top: 1rem;
+      }
+
+      .icon-button {
+        display: inline-grid;
+        width: 2.25rem;
+        height: 2.25rem;
+        place-items: center;
+        color: var(--color-text-secondary);
+        background: color-mix(
+          in srgb,
+          var(--color-background-secondary) 70%,
+          transparent
+        );
+        border-radius: 50%;
+        transition:
+          color 150ms ease,
+          background-color 150ms ease,
+          transform 180ms ease;
+      }
+
+      .icon-button:hover {
+        color: var(--color-text-strong);
+        background: var(--color-surface-hover);
+        transform: scale(1.08);
+      }
+
+      .icon-button:focus-visible {
+        outline: 2px solid var(--color-primary);
+        outline-offset: 2px;
+      }
+
+      .icon-button svg {
+        width: 1.125rem;
+        height: 1.125rem;
+        fill: none;
+        stroke: currentColor;
+        stroke-width: 1.8;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+      }
+
+      .icon-button.github svg {
+        fill: currentColor;
+        stroke: none;
+      }
+
+      @media (max-width: 720px) {
+        h1 {
+          margin-bottom: 1.5rem;
+        }
+
+        .projects {
+          grid-template-columns: 1fr;
+          gap: 1.5rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <Header />
+    <main>
+      <section aria-label="Projects">
+        <ul class="projects">
+          <li class="project-card">
+            <div class="project-media">
+              <Image
+                src={ProjectOneImage}
+                width={720}
+                height={360}
+                alt="Preview of Project One"
+              />
+            </div>
+            <div class="project-details">
+              <h2 class="project-title">Project One</h2>
+              <p class="project-description">
+                A focused web experience that turns a complex workflow into a
+                fast, approachable interface.
+              </p>
+              <div class="tag-list" aria-label="Technologies used">
+                <span class="tag-chip">Astro</span>
+                <span class="tag-chip">TypeScript</span>
+                <span class="tag-chip">CSS</span>
+              </div>
+              <div class="project-actions">
+                <a
+                  class="icon-button github"
+                  href="https://github.com/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="View Project One source on GitHub"
+                  title="View source on GitHub"
+                >
+                  <svg viewBox="0 0 16 16" aria-hidden="true">
+                    <path
+                      d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"
+                    ></path>
+                  </svg>
+                  <span class="sr-only">View source on GitHub</span>
+                </a>
+                <a
+                  class="icon-button"
+                  href="https://example.com/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Open Project One live demo"
+                  title="Open live demo"
+                >
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M13 3H4a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-3"></path>
+                    <path d="m17 8 5-5"></path>
+                    <path d="M17 3h5v5"></path>
+                    <path d="M12 17v4"></path>
+                    <path d="M8 21h8"></path>
+                  </svg>
+                  <span class="sr-only">Open live demo</span>
+                </a>
+              </div>
+            </div>
+          </li>
+
+          <li class="project-card">
+            <div class="project-media">
+              <Image
+                src={ProjectTwoImage}
+                width={720}
+                height={360}
+                alt="Preview of Project Two"
+              />
+            </div>
+            <div class="project-details">
+              <h2 class="project-title">Project Two</h2>
+              <p class="project-description">
+                A practical tool built to make everyday planning and progress
+                tracking feel effortless.
+              </p>
+              <div class="tag-list" aria-label="Technologies used">
+                <span class="tag-chip">React</span>
+                <span class="tag-chip">Node.js</span>
+                <span class="tag-chip">PostgreSQL</span>
+              </div>
+              <div class="project-actions">
+                <a
+                  class="icon-button github"
+                  href="https://github.com/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="View Project Two source on GitHub"
+                  title="View source on GitHub"
+                >
+                  <svg viewBox="0 0 16 16" aria-hidden="true">
+                    <path
+                      d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"
+                    ></path>
+                  </svg>
+                  <span class="sr-only">View source on GitHub</span>
+                </a>
+                <a
+                  class="icon-button"
+                  href="https://example.com/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Open Project Two live demo"
+                  title="Open live demo"
+                >
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M13 3H4a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-3"></path>
+                    <path d="m17 8 5-5"></path>
+                    <path d="M17 3h5v5"></path>
+                    <path d="M12 17v4"></path>
+                    <path d="M8 21h8"></path>
+                  </svg>
+                  <span class="sr-only">Open live demo</span>
+                </a>
+              </div>
+            </div>
+          </li>
+
+          <li class="project-card">
+            <div class="project-media">
+              <Image
+                src={ProjectThreeImage}
+                width={720}
+                height={360}
+                alt="Preview of Project Three"
+              />
+            </div>
+            <div class="project-details">
+              <h2 class="project-title">Project Three</h2>
+              <p class="project-description">
+                A polished interface for discovering, organizing, and sharing
+                useful information in one place.
+              </p>
+              <div class="tag-list" aria-label="Technologies used">
+                <span class="tag-chip">Astro</span>
+                <span class="tag-chip">JavaScript</span>
+                <span class="tag-chip">API</span>
+              </div>
+              <div class="project-actions">
+                <a
+                  class="icon-button github"
+                  href="https://github.com/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="View Project Three source on GitHub"
+                  title="View source on GitHub"
+                >
+                  <svg viewBox="0 0 16 16" aria-hidden="true">
+                    <path
+                      d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"
+                    ></path>
+                  </svg>
+                  <span class="sr-only">View source on GitHub</span>
+                </a>
+                <a
+                  class="icon-button"
+                  href="https://example.com/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Open Project Three live demo"
+                  title="Open live demo"
+                >
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M13 3H4a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-3"></path>
+                    <path d="m17 8 5-5"></path>
+                    <path d="M17 3h5v5"></path>
+                    <path d="M12 17v4"></path>
+                    <path d="M8 21h8"></path>
+                  </svg>
+                  <span class="sr-only">Open live demo</span>
+                </a>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </section>
+    </main>
+    <Footer />
+  </body>
+</html>
