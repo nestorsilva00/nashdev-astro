@@ -7,25 +7,42 @@ import FormattedDate from "../../components/FormattedDate.astro";
 import Header from "../../components/Header.astro";
 import { SITE_DESCRIPTION, SITE_TITLE } from "../../consts";
 
-const WORDS_PER_MINUTE = 200;
+export async function getStaticPaths({ paginate }) {
+  const wordsPerMinute = 200;
+  const postsPerPage = 4;
+  const posts = (await getCollection("blog"))
+    .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+    .map((post) => {
+      const wordCount =
+        post.body?.trim().split(/\s+/).filter(Boolean).length ?? 0;
 
-const posts = (await getCollection("blog"))
-  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
-  .map((post) => {
-    const wordCount =
-      post.body?.trim().split(/\s+/).filter(Boolean).length ?? 0;
+      return {
+        ...post,
+        readingTime: Math.max(1, Math.ceil(wordCount / wordsPerMinute)),
+      };
+    });
 
-    return {
-      ...post,
-      readingTime: Math.max(1, Math.ceil(wordCount / WORDS_PER_MINUTE)),
-    };
-  });
+  return paginate(posts, { pageSize: postsPerPage });
+}
+
+const { page } = Astro.props;
+const posts = page.data;
+const pageNumbers = Array.from(
+  { length: page.lastPage },
+  (_, index) => index + 1,
+);
+const pageHref = (pageNumber) =>
+  pageNumber === 1 ? "/blog/" : `/blog/${pageNumber}/`;
+const pageTitle =
+  page.currentPage === 1
+    ? SITE_TITLE
+    : `Blog – Page ${page.currentPage} | ${SITE_TITLE}`;
 ---
 
 <!doctype html>
 <html lang="en">
   <head>
-    <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+    <BaseHead title={pageTitle} description={SITE_DESCRIPTION} />
     <style>
       main {
         width: 960px;
@@ -248,6 +265,65 @@ const posts = (await getCollection("blog"))
         margin-top: auto;
       }
 
+      .pagination {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+        gap: 1rem;
+        align-items: center;
+        margin-top: 3rem;
+      }
+      .pagination-edge {
+        display: flex;
+      }
+      .pagination-edge-next {
+        justify-content: flex-end;
+      }
+      .pagination-pages {
+        display: flex;
+        align-items: center;
+        gap: 0.35rem;
+      }
+      .pagination-link {
+        display: inline-grid;
+        min-width: 2.25rem;
+        height: 2.25rem;
+        padding: 0 0.65rem;
+        place-items: center;
+        color: var(--color-text-secondary);
+        background: transparent;
+        border: 1px solid transparent;
+        border-radius: 0.55rem;
+        font-family:
+          ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+        font-size: 0.75rem;
+        font-weight: 700;
+        line-height: 1;
+        text-decoration: none;
+        transition:
+          color 150ms ease,
+          background-color 150ms ease,
+          border-color 150ms ease;
+      }
+      .pagination-link:hover {
+        color: var(--color-text-strong);
+        background: var(--color-surface-hover);
+        border-color: var(--color-border-light);
+      }
+      .pagination-link[aria-current="page"] {
+        color: var(--color-accent);
+        background: color-mix(in srgb, var(--color-accent) 10%, transparent);
+        border-color: color-mix(
+          in srgb,
+          var(--color-accent) 24%,
+          transparent
+        );
+      }
+      .pagination-direction {
+        display: inline-flex;
+        width: auto;
+        gap: 0.45rem;
+      }
+
       @media (max-width: 720px) {
         .blog-toolbar {
           margin-bottom: 1.5rem;
@@ -267,6 +343,18 @@ const posts = (await getCollection("blog"))
         }
         .posts[data-view="list"] .post-content {
           padding: 1rem 0.125rem 0;
+        }
+        .pagination {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+          margin-top: 2.25rem;
+        }
+        .pagination-pages {
+          grid-column: 1 / -1;
+          grid-row: 1;
+          justify-content: center;
+        }
+        .pagination-edge {
+          grid-row: 2;
         }
       }
     </style>
@@ -354,6 +442,50 @@ const posts = (await getCollection("blog"))
           }
         </ul>
       </section>
+      {
+        page.lastPage > 1 && (
+          <nav class="pagination" aria-label="Blog pagination">
+            <div class="pagination-edge">
+              {page.url.prev && (
+                <a
+                  class="pagination-link pagination-direction"
+                  href={page.url.prev}
+                  rel="prev"
+                >
+                  <span aria-hidden="true">←</span>
+                  Previous
+                </a>
+              )}
+            </div>
+            <div class="pagination-pages">
+              {pageNumbers.map((pageNumber) => (
+                <a
+                  class="pagination-link"
+                  href={pageHref(pageNumber)}
+                  aria-label={`Page ${pageNumber}`}
+                  aria-current={
+                    pageNumber === page.currentPage ? "page" : undefined
+                  }
+                >
+                  {pageNumber}
+                </a>
+              ))}
+            </div>
+            <div class="pagination-edge pagination-edge-next">
+              {page.url.next && (
+                <a
+                  class="pagination-link pagination-direction"
+                  href={page.url.next}
+                  rel="next"
+                >
+                  Next
+                  <span aria-hidden="true">→</span>
+                </a>
+              )}
+            </div>
+          </nav>
+        )
+      }
     </main>
     <Footer />
     <script>
