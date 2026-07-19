@@ -1,49 +1,443 @@
 ---
-import BaseHead from '../components/BaseHead.astro';
-import Footer from '../components/Footer.astro';
-import Header from '../components/Header.astro';
-import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
+import { Image } from "astro:assets";
+import { getCollection } from "astro:content";
+import BaseHead from "../components/BaseHead.astro";
+import Footer from "../components/Footer.astro";
+import FormattedDate from "../components/FormattedDate.astro";
+import Header from "../components/Header.astro";
+import { SITE_DESCRIPTION, SITE_TITLE } from "../consts";
+
+const recentPosts = (await getCollection("blog"))
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+  .slice(0, 3);
+
+// Replace these placeholders with links and details from your social analytics.
+const socialPosts = [
+  {
+    platform: "LinkedIn",
+    platformMark: "in",
+    title: "Add your most visited LinkedIn post",
+    description:
+      "Use this space for a short preview of the idea, lesson, or story shared in the post.",
+    href: "https://www.linkedin.com/in/nestorsilvahernandez/recent-activity/all/",
+    metric: "Add views",
+  },
+  {
+    platform: "X",
+    platformMark: "𝕏",
+    title: "Add your most visited social post",
+    description:
+      "Summarize the post in one or two lines so visitors know why it is worth reading.",
+    href: "https://twitter.com/astrodotbuild",
+    metric: "Add views",
+  },
+];
 ---
 
 <!doctype html>
 <html lang="en">
-	<head>
-		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
-	</head>
-	<body>
-		<Header />
-		<main>
-			<h1>🧑‍🚀 Hello, Astronaut!</h1>
-			<p>
-				Welcome to the official <a href="https://astro.build/">Astro</a> blog starter template. This template
-				serves as a lightweight, minimally-styled starting point for anyone looking to build a personal
-				website, blog, or portfolio with Astro.
-			</p>
-			<p>
-				This template comes with a few integrations already configured in your
-				<code>astro.config.mjs</code> file. You can customize your setup with
-				<a href="https://astro.build/integrations">Astro Integrations</a> to add tools like Tailwind,
-				React, or Vue to your project.
-			</p>
-			<p>Here are a few ideas on how to get started with the template:</p>
-			<ul>
-				<li>Edit this page in <code>src/pages/index.astro</code></li>
-				<li>Edit the site header items in <code>src/components/Header.astro</code></li>
-				<li>Add your name to the footer in <code>src/components/Footer.astro</code></li>
-				<li>Check out the included blog posts in <code>src/content/blog/</code></li>
-				<li>Customize the blog post page layout in <code>src/layouts/BlogPost.astro</code></li>
-			</ul>
-			<p>
-				Have fun! If you get stuck, remember to
-				<a href="https://docs.astro.build/">read the docs</a>
-				or <a href="https://astro.build/chat">join us on Discord</a> to ask questions.
-			</p>
-			<p>
-				Looking for a blog template with a bit more personality? Check out
-				<a href="https://github.com/Charca/astro-blog-template">astro-blog-template</a>
-				by <a href="https://twitter.com/Charca">Maxi Ferreira</a>.
-			</p>
-		</main>
-		<Footer />
-	</body>
+  <head>
+    <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+    <style>
+      main {
+        width: 960px;
+      }
+
+      .home-section + .home-section {
+        margin-top: 5rem;
+      }
+
+      .section-heading {
+        display: flex;
+        align-items: end;
+        justify-content: space-between;
+        gap: 1.5rem;
+        margin-bottom: 1.75rem;
+      }
+
+      .section-heading h1,
+      .section-heading h2 {
+        margin: 0;
+        font-size: clamp(1.75rem, 4vw, 2.5rem);
+        letter-spacing: -0.025em;
+      }
+
+      .section-eyebrow {
+        margin: 0 0 0.65rem;
+        color: var(--color-text-secondary);
+        font-family:
+          ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+        font-size: 0.72rem;
+        font-weight: 700;
+        letter-spacing: 0.11em;
+        line-height: 1;
+        text-transform: uppercase;
+      }
+
+      .section-link {
+        display: inline-flex;
+        flex: 0 0 auto;
+        align-items: center;
+        gap: 0.4rem;
+        color: var(--color-text-secondary);
+        font-size: 0.82rem;
+        font-weight: 700;
+        line-height: 1;
+        text-decoration: none;
+        transition:
+          color 160ms ease,
+          transform 160ms ease;
+      }
+
+      .section-link:hover {
+        color: var(--color-accent);
+        transform: translateX(0.2rem);
+      }
+
+      .recent-posts,
+      .social-posts {
+        display: grid;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      .recent-posts {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 1.75rem;
+      }
+
+      .post-link {
+        display: block;
+        color: inherit;
+        text-decoration: none;
+      }
+
+      .post-media {
+        display: block;
+        overflow: hidden;
+        aspect-ratio: 16 / 10;
+        margin-bottom: 1rem;
+        background: var(--color-background-secondary);
+        border-radius: 0.75rem;
+      }
+
+      .post-media :global(img) {
+        display: block;
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        object-fit: cover;
+        transition: transform 220ms ease;
+      }
+
+      .post-placeholder {
+        display: block;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          135deg,
+          var(--color-background-secondary),
+          color-mix(in srgb, var(--color-accent) 12%, var(--color-background))
+        );
+      }
+
+      .post-meta {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.75rem;
+        margin-bottom: 0.55rem;
+        color: var(--color-text-secondary);
+        font-family:
+          ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+        font-size: 0.7rem;
+        line-height: 1.3;
+      }
+
+      .post-tag {
+        overflow: hidden;
+        color: var(--color-accent);
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .post-title {
+        margin: 0;
+        font-size: 1.15rem;
+        letter-spacing: -0.015em;
+        line-height: 1.3;
+        transition: color 160ms ease;
+      }
+
+      .post-description {
+        display: -webkit-box;
+        overflow: hidden;
+        margin: 0.55rem 0 0;
+        color: var(--color-text);
+        font-size: 0.85rem;
+        line-height: 1.5;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;
+      }
+
+      .post-link:hover .post-title {
+        color: var(--color-accent);
+      }
+
+      .post-link:hover .post-media :global(img) {
+        transform: scale(1.035);
+      }
+
+      .social-posts {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 1rem;
+      }
+
+      .social-post-link {
+        display: grid;
+        grid-template-columns: 2.75rem minmax(0, 1fr) auto;
+        gap: 1rem;
+        align-items: start;
+        height: 100%;
+        padding: 1.25rem;
+        color: inherit;
+        background: color-mix(
+          in srgb,
+          var(--color-surface-strong) 76%,
+          transparent
+        );
+        border: 1px solid var(--color-border-light);
+        border-radius: 0.85rem;
+        text-decoration: none;
+        transition:
+          background-color 160ms ease,
+          border-color 160ms ease,
+          transform 160ms ease;
+      }
+
+      .social-post-link:hover {
+        background: var(--color-surface-strong);
+        border-color: var(--color-border-strong);
+        transform: translateY(-0.2rem);
+      }
+
+      .platform-mark {
+        display: grid;
+        width: 2.75rem;
+        height: 2.75rem;
+        place-items: center;
+        color: var(--color-text-inverse);
+        background: linear-gradient(
+          135deg,
+          var(--color-primary),
+          var(--color-accent)
+        );
+        border-radius: 0.65rem;
+        font-family:
+          ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+        font-size: 0.78rem;
+        font-weight: 800;
+      }
+
+      .social-post-content {
+        min-width: 0;
+      }
+
+      .social-post-meta {
+        display: flex;
+        align-items: center;
+        gap: 0.55rem;
+        margin: 0 0 0.45rem;
+        color: var(--color-text-secondary);
+        font-size: 0.72rem;
+        line-height: 1;
+      }
+
+      .social-post-meta span + span::before {
+        margin-right: 0.55rem;
+        color: var(--color-text-muted);
+        content: "•";
+      }
+
+      .social-post-title {
+        margin: 0;
+        font-size: 1rem;
+        line-height: 1.35;
+        transition: color 160ms ease;
+      }
+
+      .social-post-description {
+        margin: 0.55rem 0 0;
+        color: var(--color-text);
+        font-size: 0.82rem;
+        line-height: 1.5;
+      }
+
+      .social-post-arrow {
+        color: var(--color-text-muted);
+        font-size: 1rem;
+        line-height: 1;
+        transition:
+          color 160ms ease,
+          transform 160ms ease;
+      }
+
+      .social-post-link:hover .social-post-title,
+      .social-post-link:hover .social-post-arrow {
+        color: var(--color-accent);
+      }
+
+      .social-post-link:hover .social-post-arrow {
+        transform: translate(0.15rem, -0.15rem);
+      }
+
+      @media (max-width: 760px) {
+        .recent-posts {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .social-posts {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      @media (max-width: 520px) {
+        .home-section + .home-section {
+          margin-top: 3.75rem;
+        }
+
+        .section-heading {
+          align-items: center;
+          margin-bottom: 1.25rem;
+        }
+
+        .recent-posts {
+          grid-template-columns: 1fr;
+          gap: 2rem;
+        }
+
+        .social-post-link {
+          grid-template-columns: 2.5rem minmax(0, 1fr) auto;
+          gap: 0.8rem;
+          padding: 1rem;
+        }
+
+        .platform-mark {
+          width: 2.5rem;
+          height: 2.5rem;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .section-link,
+        .post-media :global(img),
+        .social-post-link,
+        .social-post-arrow {
+          transition: none;
+        }
+
+        .section-link:hover,
+        .post-link:hover .post-media :global(img),
+        .social-post-link:hover,
+        .social-post-link:hover .social-post-arrow {
+          transform: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <Header />
+    <main>
+      <section
+        class="home-section"
+        id="recent-posts"
+        aria-labelledby="recent-posts-title"
+      >
+        <div class="section-heading">
+          <div>
+            <p class="section-eyebrow">// From the blog</p>
+            <h1 id="recent-posts-title">Recent posts</h1>
+          </div>
+          <a class="section-link" href="/blog">
+            View all
+            <span aria-hidden="true">→</span>
+          </a>
+        </div>
+
+        <ol class="recent-posts">
+          {
+            recentPosts.map((post) => (
+              <li>
+                <a class="post-link" href={`/blog/${post.id}/`}>
+                  <span class="post-media">
+                    {post.data.heroImage ? (
+                      <Image
+                        src={post.data.heroImage}
+                        width={640}
+                        height={400}
+                        alt=""
+                      />
+                    ) : (
+                      <span class="post-placeholder" aria-hidden="true" />
+                    )}
+                  </span>
+                  <div class="post-meta">
+                    <FormattedDate date={post.data.pubDate} />
+                    {post.data.tags[0] && (
+                      <span class="post-tag">{post.data.tags[0]}</span>
+                    )}
+                  </div>
+                  <h2 class="post-title">{post.data.title}</h2>
+                  <p class="post-description">{post.data.description}</p>
+                </a>
+              </li>
+            ))
+          }
+        </ol>
+      </section>
+
+      <section
+        class="home-section"
+        id="social-posts"
+        aria-labelledby="social-posts-title"
+      >
+        <div class="section-heading">
+          <div>
+            <p class="section-eyebrow">// Around the web</p>
+            <h2 id="social-posts-title">Most visited social posts</h2>
+          </div>
+        </div>
+
+        <ol class="social-posts">
+          {
+            socialPosts.map((post) => (
+              <li>
+                <a
+                  class="social-post-link"
+                  href={post.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <span class="platform-mark" aria-hidden="true">
+                    {post.platformMark}
+                  </span>
+                  <div class="social-post-content">
+                    <p class="social-post-meta">
+                      <span>{post.platform}</span>
+                      <span>{post.metric}</span>
+                    </p>
+                    <h3 class="social-post-title">{post.title}</h3>
+                    <p class="social-post-description">{post.description}</p>
+                  </div>
+                  <span class="social-post-arrow" aria-hidden="true">↗</span>
+                </a>
+              </li>
+            ))
+          }
+        </ol>
+      </section>
+    </main>
+    <Footer />
+  </body>
 </html>
