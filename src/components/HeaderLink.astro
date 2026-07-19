@@ -15,21 +15,23 @@ const isActive = href === pathname || href === "/" + (subpath?.[0] || "");
   aria-current={isActive ? "page" : undefined}
   {...props}
 >
-  {
-    isActive && (
-      <span class="brace" aria-hidden="true">
-        {"{ "}
-      </span>
-    )
-  }
-  <slot />
-  {
-    isActive && (
-      <span class="brace" aria-hidden="true">
-        {" }"}
-      </span>
-    )
-  }
+  <span class="link-content">
+    {
+      isActive && (
+        <span class="brace" aria-hidden="true">
+          {"{ "}
+        </span>
+      )
+    }
+    <span class="label"><slot /></span>
+    {
+      isActive && (
+        <span class="brace" aria-hidden="true">
+          {" }"}
+        </span>
+      )
+    }
+  </span>
 </a>
 <style>
   a {
@@ -37,13 +39,18 @@ const isActive = href === pathname || href === "/" + (subpath?.[0] || "");
     min-height: var(--header-control-size, 2.1rem);
     align-items: center;
     justify-content: center;
-    gap: 0.2em;
     color: var(--color-text-secondary);
     font-size: 0.875rem;
     font-weight: 400;
     line-height: 1;
     text-decoration: none;
     transition: color 150ms ease;
+  }
+  .link-content {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.2em;
+    transform: translateY(0.125rem);
   }
   a:hover {
     color: var(--color-text-strong);
