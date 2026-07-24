@@ -1,0 +1,24 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "nashdev-astro",
+  "main": "@astrojs/cloudflare/entrypoints/server",
+  "compatibility_date": "2026-07-23",
+  "compatibility_flags": ["nodejs_compat"],
+  "assets": {
+    "binding": "ASSETS",
+    "directory": "./dist"
+  },
+  "ai": {
+    "binding": "AI"
+  },
+  "vars": {
+    "CHAT_PROVIDER": "cloudflare-workers-ai",
+    "CHAT_MODEL": "@cf/meta/llama-3.1-8b-instruct-fp8",
+    "CHAT_TEMPERATURE": "0.2",
+    "CHAT_MAX_TOKENS": "500",
+    "CHAT_TIMEOUT_MS": "45000"
+  },
+  "observability": {
+    "enabled": true
+  }
+}

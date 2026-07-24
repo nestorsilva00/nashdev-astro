@@ -54,6 +54,47 @@ All commands are run from the root of the project, from a terminal:
 | `pnpm astro ...`       | Run CLI commands like `astro add`, `astro check` |
 | `pnpm astro -- --help` | Get help using the Astro CLI                     |
 
+## Chat API
+
+The chat UI sends the current in-memory conversation to `POST /api/chat`.
+The endpoint talks to a provider through the `ChatProvider` interface in
+`src/lib/chat/types.ts`; provider-specific request formats stay inside
+`src/lib/chat/providers/`.
+
+### Cloudflare Workers AI
+
+The default deployment uses the `AI` binding declared in `wrangler.jsonc` and
+the Cloudflare-hosted model:
+
+```text
+@cf/meta/llama-3.1-8b-instruct-fp8
+```
+
+Set up and deploy:
+
+```sh
+pnpm install
+pnpm wrangler login
+pnpm cf:types
+pnpm dev
+pnpm deploy
+```
+
+Workers AI requests made during local development still use the Cloudflare
+account and count toward its Workers AI allowance.
+
+### Other model providers
+
+The OpenAI-compatible adapter remains available for Ollama, llama.cpp, vLLM,
+LM Studio, and hosted APIs that implement `POST /v1/chat/completions`. Copy
+`.env.example` to `.env` when using this mode outside Cloudflare. API keys and
+other chat configuration are server-only and must never use Astro's `PUBLIC_`
+prefix.
+
+To add a provider with a different protocol, implement `ChatProvider` in
+`src/lib/chat/providers/`, add its configuration name in
+`src/lib/chat/config.ts`, and register it in `src/lib/chat/provider.ts`.
+
 ## 👀 Want to learn more?
 
 Check out [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
