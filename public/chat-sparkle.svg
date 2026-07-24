@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="70 58 300 300">
+  <!-- Speech bubble -->
+  <path
+    d="M 227 116
+       H 125
+       C 98 116, 79 135, 79 162
+       V 258
+       C 79 279, 89 293, 108 300
+       L 88 344
+       C 86 349, 91 351, 95 348
+       L 174 302
+       H 285
+       C 311 302, 328 285, 328 259
+       V 212"
+    fill="none"
+    stroke="#1d1d1d"
+    stroke-width="15"
+    stroke-linecap="round"
+    stroke-linejoin="round"/>
+
+  <!-- Text lines -->
+  <path d="M 142 174 H 259" fill="none" stroke="#1d1d1d" stroke-width="15" stroke-linecap="round"/>
+  <path d="M 142 210 H 260" fill="none" stroke="#1d1d1d" stroke-width="15" stroke-linecap="round"/>
+  <path d="M 142 246 H 212" fill="none" stroke="#1d1d1d" stroke-width="15" stroke-linecap="round"/>
+
+  <!-- Large sparkle -->
+  <path
+    d="M 284 87
+       C 289 106, 301 122, 327 131
+       C 304 139, 290 153, 282 178
+       C 275 155, 260 141, 239 133
+       C 261 124, 276 109, 284 87 Z"
+    fill="none"
+    stroke="#1d1d1d"
+    stroke-width="15"
+    stroke-linecap="round"
+    stroke-linejoin="round"/>
+
+  <!-- Small top sparkle -->
+  <path
+    d="M 324 67
+       C 327 75, 332 80, 340 83
+       C 332 86, 327 91, 324 99
+       C 321 91, 316 86, 308 83
+       C 316 80, 321 75, 324 67 Z"
+    fill="none"
+    stroke="#1d1d1d"
+    stroke-width="15"
+    stroke-linecap="round"
+    stroke-linejoin="round"/>
+
+  <!-- Small right sparkle -->
+  <path
+    d="M 339 153
+       C 343 164, 350 171, 361 175
+       C 350 179, 343 186, 339 198
+       C 335 186, 328 179, 317 175
+       C 328 171, 335 164, 339 153 Z"
+    fill="none"
+    stroke="#1d1d1d"
+    stroke-width="15"
+    stroke-linecap="round"
+    stroke-linejoin="round"/>
+</svg>

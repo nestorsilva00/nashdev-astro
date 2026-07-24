@@ -1,5 +1,6 @@
 ---
 import { SITE_TITLE } from "../consts";
+import ChatSidebar from "./ChatSidebar.astro";
 import HeaderLink from "./HeaderLink.astro";
 
 const currentSection =
@@ -9,7 +10,7 @@ const currentSection =
     .filter(Boolean)[0] ?? "";
 ---
 
-<header>
+<header data-reveal="header">
   <nav aria-label="Primary navigation">
     <h2>
       <a class="terminal-brand" href="/" aria-label={`${SITE_TITLE} home`}>
@@ -107,9 +108,22 @@ const currentSection =
         </svg>
         <span class="sr-only">Toggle color theme</span>
       </button>
+      <button
+        class="chat-toggle"
+        type="button"
+        aria-label="Open Ask Nestor"
+        aria-controls="chat-panel"
+        aria-expanded="false"
+        data-chat-toggle
+      >
+        <span class="chat-toggle-icon" aria-hidden="true"></span>
+        <span class="sr-only">Open Ask Nestor</span>
+      </button>
     </div>
   </nav>
 </header>
+
+<ChatSidebar />
 
 <script>
   const menuButton = document.querySelector("[data-menu-button]");
@@ -298,7 +312,8 @@ const currentSection =
   }
   .social-links a,
   .menu-button,
-  .theme-toggle {
+  .theme-toggle,
+  .chat-toggle {
     width: var(--header-control-size);
     height: var(--header-control-size);
     color: var(--color-text-secondary);
@@ -313,7 +328,8 @@ const currentSection =
   }
   .social-links a:hover,
   .menu-button:hover,
-  .theme-toggle:hover {
+  .theme-toggle:hover,
+  .chat-toggle:hover {
     color: var(--color-text-strong);
     background: var(--color-surface-hover);
     transform: scale(1.1);
@@ -342,12 +358,21 @@ const currentSection =
     stroke-linecap: round;
     stroke-linejoin: round;
   }
-  .theme-toggle {
+  .theme-toggle,
+  .chat-toggle {
     display: grid;
     place-items: center;
     line-height: 0;
   }
-  .social-links + .theme-toggle {
+  .chat-toggle-icon {
+    display: block;
+    width: 1.125rem;
+    height: 1.125rem;
+    background: currentColor;
+    -webkit-mask: url("/chat-sparkle.svg?v=5") center / contain no-repeat;
+    mask: url("/chat-sparkle.svg?v=5") center / contain no-repeat;
+  }
+  .social-links + .theme-toggle + .chat-toggle {
     margin-left: calc(var(--header-icon-gap) - var(--header-item-gap));
   }
   .theme-icon-sun {
