@@ -354,7 +354,7 @@ const socialPosts = [
         id="recent-posts"
         aria-labelledby="recent-posts-title"
       >
-        <div class="section-heading">
+        <div class="section-heading" data-reveal>
           <div>
             <p class="section-eyebrow">// From the blog</p>
             <h1 id="recent-posts-title">Recent posts</h1>
@@ -368,7 +368,7 @@ const socialPosts = [
         <ol class="recent-posts">
           {
             recentPosts.map((post) => (
-              <li>
+              <li data-reveal>
                 <a class="post-link" href={`/blog/${post.id}/`}>
                   <span class="post-media">
                     {post.data.heroImage ? (
@@ -402,7 +402,7 @@ const socialPosts = [
         id="social-posts"
         aria-labelledby="social-posts-title"
       >
-        <div class="section-heading">
+        <div class="section-heading" data-reveal>
           <div>
             <p class="section-eyebrow">// Around the web</p>
             <h2 id="social-posts-title">Most visited social posts</h2>
@@ -412,7 +412,7 @@ const socialPosts = [
         <ol class="social-posts">
           {
             socialPosts.map((post) => (
-              <li>
+              <li data-reveal>
                 <a
                   class="social-post-link"
                   href={post.href}

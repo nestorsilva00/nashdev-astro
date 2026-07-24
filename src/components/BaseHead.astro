@@ -45,6 +45,13 @@ const { title, description, image = FallbackImage } = Astro.props;
 			'content',
 			theme === 'dark' ? '#10141e' : '#ffffff',
 		);
+
+		if (
+			'IntersectionObserver' in window &&
+			!window.matchMedia('(prefers-reduced-motion: reduce)').matches
+		) {
+			document.documentElement.classList.add('reveal-enabled');
+		}
 	})();
 </script>
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
@@ -76,3 +83,65 @@ const { title, description, image = FallbackImage } = Astro.props;
 
 <!-- Twitter -->
 <meta name="twitter:card" content="summary_large_image" />
+
+<script is:inline>
+	(() => {
+		const setupRevealAnimations = () => {
+			const root = document.documentElement;
+
+			if (!root.classList.contains('reveal-enabled')) {
+				return;
+			}
+
+			document
+				.querySelectorAll('.prose > :not(.title)')
+				.forEach((element) => element.setAttribute('data-reveal', ''));
+
+			const elements = document.querySelectorAll('[data-reveal]');
+
+			if (!elements.length) {
+				root.classList.remove('reveal-enabled');
+				return;
+			}
+
+			const reveal = (element) => {
+				element.classList.add('is-revealed');
+			};
+
+			const observer = new IntersectionObserver(
+				(entries) => {
+					for (const entry of entries) {
+						if (!entry.isIntersecting) continue;
+
+						reveal(entry.target);
+						observer.unobserve(entry.target);
+					}
+				},
+				{
+					threshold: 0.06,
+					rootMargin: '0px 0px -6% 0px',
+				},
+			);
+
+			elements.forEach((element) => {
+				const bounds = element.getBoundingClientRect();
+				const isInitiallyVisible =
+					bounds.top < window.innerHeight * 0.94 && bounds.bottom > 0;
+
+				if (isInitiallyVisible) {
+					requestAnimationFrame(() => reveal(element));
+				} else {
+					observer.observe(element);
+				}
+			});
+		};
+
+		if (document.readyState === 'loading') {
+			document.addEventListener('DOMContentLoaded', setupRevealAnimations, {
+				once: true,
+			});
+		} else {
+			setupRevealAnimations();
+		}
+	})();
+</script>

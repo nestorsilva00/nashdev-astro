@@ -362,7 +362,7 @@ const pageTitle =
   <body>
     <Header />
     <main>
-      <div class="blog-toolbar">
+      <div class="blog-toolbar" data-reveal>
         <div class="view-toggle" role="group" aria-label="Choose post layout">
           <button
             class="view-button"
@@ -402,7 +402,7 @@ const pageTitle =
         <ul class="posts" data-posts data-view="grid">
           {
             posts.map((post) => (
-              <li class="post-item">
+              <li class="post-item" data-reveal>
                 <a class="post-link" href={`/blog/${post.id}/`}>
                   <div class="post-media">
                     {post.data.heroImage ? (
@@ -444,7 +444,7 @@ const pageTitle =
       </section>
       {
         page.lastPage > 1 && (
-          <nav class="pagination" aria-label="Blog pagination">
+          <nav class="pagination" aria-label="Blog pagination" data-reveal>
             <div class="pagination-edge">
               {page.url.prev && (
                 <a
