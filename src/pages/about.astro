@@ -30,6 +30,12 @@ const { name, about, skillGroups, experience, education } = profileEntry.data;
         margin-bottom: 1.5rem;
       }
 
+      .about-page > #skills,
+      .about-page > #experience,
+      .about-page > #education {
+        margin-top: 5rem;
+      }
+
       .about-section {
         align-items: start;
         padding-top: 1rem;
@@ -356,7 +362,9 @@ const { name, about, skillGroups, experience, education } = profileEntry.data;
       }
 
       @media (max-width: 600px) {
-        .about-page > section + section {
+        .about-page > #skills,
+        .about-page > #experience,
+        .about-page > #education {
           margin-top: 3.75rem;
         }
 
