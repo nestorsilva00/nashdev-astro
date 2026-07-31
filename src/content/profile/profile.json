@@ -1,0 +1,359 @@
+{
+  "type": "profile",
+  "name": "Nestor Silva",
+  "headline": "Backend-focused senior software engineer",
+  "about": [
+    "Hi, I’m Nestor, a backend-focused senior software engineer with more than five years of experience building scalable systems, APIs, enterprise applications, automation, and data-driven products. My strongest background is in Python, but I also work across Kotlin, TypeScript, Java, and React when a solution calls for it.",
+    "I care as much about the product as I do about the code. Good technical decisions begin with understanding the problem, the users, the business context, and the trade-offs. I enjoy solving difficult problems and finding simpler, more efficient ways to deliver useful, reliable software.",
+    "AI-powered systems are now one of my main areas of focus. I build practical, production-ready solutions with technologies including Python, FastAPI, React, REST APIs, AWS, Docker, Odoo, PostgreSQL, and TypeScript, applying AI where it creates measurable value rather than adding complexity for its own sake.",
+    "I’m currently open to Software Engineer, Backend Engineer, and AI Engineer opportunities that include relocation."
+  ],
+  "skillGroups": [
+    {
+      "title": "Languages",
+      "skills": [
+        {
+          "name": "Python",
+          "logo": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/python/python-original.svg"
+        },
+        {
+          "name": "Kotlin",
+          "logo": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/kotlin/kotlin-original.svg"
+        },
+        {
+          "name": "TypeScript",
+          "logo": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/typescript/typescript-original.svg"
+        },
+        {
+          "name": "Java",
+          "logo": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/java/java-original.svg"
+        },
+        {
+          "name": "JavaScript",
+          "logo": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/javascript/javascript-original.svg"
+        }
+      ]
+    },
+    {
+      "title": "Backend",
+      "skills": [
+        {
+          "name": "FastAPI",
+          "logo": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/fastapi/fastapi-original.svg"
+        },
+        {
+          "name": "Django",
+          "logo": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/django/django-plain.svg"
+        },
+        {
+          "name": "Flask",
+          "logo": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/flask/flask-original.svg"
+        },
+        {
+          "name": "Spring Boot",
+          "logo": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/spring/spring-original.svg"
+        },
+        {
+          "name": "Odoo",
+          "logo": "https://cdn.simpleicons.org/odoo/714B67"
+        },
+        {
+          "name": "NestJS",
+          "logo": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nestjs/nestjs-original.svg"
+        }
+      ]
+    },
+    {
+      "title": "Frontend",
+      "skills": [
+        {
+          "name": "React/React Native",
+          "logo": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original.svg"
+        },
+        {
+          "name": "Tailwind CSS",
+          "logo": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tailwindcss/tailwindcss-original.svg"
+        },
+        {
+          "name": "Next.js",
+          "logo": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nextjs/nextjs-original.svg"
+        },
+        {
+          "name": "Astro",
+          "logo": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/astro/astro-original.svg"
+        },
+        {
+          "name": "Electron.js",
+          "logo": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/electron/electron-original.svg"
+        }
+      ]
+    },
+    {
+      "title": "Infrastructure",
+      "skills": [
+        {
+          "name": "Amazon Web Services",
+          "logo": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/amazonwebservices/amazonwebservices-plain-wordmark.svg"
+        },
+        {
+          "name": "Docker",
+          "logo": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/docker/docker-original.svg"
+        },
+        {
+          "name": "Docker Swarm",
+          "logo": "/docker-swarm.svg"
+        },
+        {
+          "name": "Terraform",
+          "logo": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/terraform/terraform-original.svg"
+        },
+        {
+          "name": "Jenkins",
+          "logo": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/jenkins/jenkins-original.svg"
+        }
+      ]
+    },
+    {
+      "title": "Databases",
+      "skills": [
+        {
+          "name": "SQL",
+          "logo": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/azuresqldatabase/azuresqldatabase-original.svg"
+        },
+        {
+          "name": "PostgreSQL",
+          "logo": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/postgresql/postgresql-original.svg"
+        },
+        {
+          "name": "MySQL",
+          "logo": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/mysql/mysql-original.svg"
+        },
+        {
+          "name": "MongoDB",
+          "logo": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/mongodb/mongodb-original.svg"
+        },
+        {
+          "name": "SQLite",
+          "logo": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/sqlite/sqlite-original.svg"
+        }
+      ]
+    },
+    {
+      "title": "AI Tools",
+      "skills": [
+        {
+          "name": "Ollama",
+          "logo": "https://cdn.simpleicons.org/ollama/888888"
+        },
+        {
+          "name": "MCP",
+          "logo": "https://cdn.simpleicons.org/modelcontextprotocol/5B5BFF"
+        },
+        {
+          "name": "Codex",
+          "logo": "https://cdn.simpleicons.org/openai/412991"
+        },
+        {
+          "name": "Claude",
+          "logo": "https://cdn.simpleicons.org/anthropic/D97757"
+        },
+        {
+          "name": "LLM Agents",
+          "logo": "/llm-agents.svg"
+        }
+      ]
+    },
+    {
+      "title": "Data Science",
+      "skills": [
+        {
+          "name": "Pandas",
+          "logo": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/pandas/pandas-original.svg"
+        },
+        {
+          "name": "NumPy",
+          "logo": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/numpy/numpy-original.svg"
+        },
+        {
+          "name": "SciPy",
+          "logo": "https://cdn.simpleicons.org/scipy/8CAAE6"
+        },
+        {
+          "name": "Matplotlib",
+          "logo": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/matplotlib/matplotlib-original.svg"
+        },
+        {
+          "name": "KNIME",
+          "logo": "https://cdn.simpleicons.org/knime/FDD800"
+        },
+        {
+          "name": "OpenCV",
+          "logo": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/opencv/opencv-original.svg"
+        }
+      ]
+    },
+    {
+      "title": "Testing & Quality Engineering",
+      "skills": [
+        {
+          "name": "Playwright",
+          "logo": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/playwright/playwright-original.svg"
+        },
+        {
+          "name": "Selenium",
+          "logo": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/selenium/selenium-original.svg"
+        },
+        {
+          "name": "Test Automation",
+          "logo": "/test-automation.svg"
+        },
+        {
+          "name": "End-to-End Testing",
+          "logo": "/e2e-testing.svg"
+        },
+        {
+          "name": "API Testing",
+          "logo": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/swagger/swagger-original.svg"
+        }
+      ]
+    },
+    {
+      "title": "Software Design & Architecture",
+      "skills": [
+        {
+          "name": "Domain-Driven Design",
+          "logo": "https://cdn.simpleicons.org/uml/235EBD"
+        },
+        {
+          "name": "Data-Driven Application Design",
+          "logo": "https://cdn.simpleicons.org/databricks/FF3621"
+        },
+        {
+          "name": "Distributed Systems",
+          "logo": "https://cdn.simpleicons.org/kubernetes/326CE5"
+        },
+        {
+          "name": "LLM Agent Orchestration",
+          "logo": "https://cdn.simpleicons.org/langchain/1C3C3C"
+        },
+        {
+          "name": "RAG",
+          "logo": "/rag.svg"
+        },
+        {
+          "name": "Concurrency",
+          "logo": "/concurrency.svg"
+        }
+      ]
+    }
+  ],
+  "experience": [
+    {
+      "id": "jobrad",
+      "role": "Software Engineer",
+      "company": "JobRad GmbH",
+      "companyInitials": "JR",
+      "logo": "/jobrad_gmbh_logo.jpeg",
+      "dates": "Feb 2023 – Present",
+      "status": "Current",
+      "highlights": [
+        "Built a FastAPI-based LLM orchestration platform for complex bike-accessory validation, combining specialized agents, SearXNG search, RAG, multiple model providers, structured outputs, and evidence-based decisions.",
+        "Built an explainable, confidence-based product-matching engine in Kotlin that automatically accepts, rejects, or flags uncertain catalog matches using configurable thresholds.",
+        "Developed an Odoo module that encrypts sensitive personal data to strengthen security and support GDPR compliance.",
+        "Designed a coupon-management system for Odoo and a React customer portal, with synchronization mechanisms that reliably enforce usage limits under concurrent requests.",
+        "Fine-tuned an open-source document-understanding model to extract structured data from poorly formatted PDFs and populate business forms automatically.",
+        "Built a customizable reporting system for a React customer portal, optimizing SQL queries for large datasets and creating reusable reporting components."
+      ],
+      "technologies": [
+        "FastAPI",
+        "LLMs",
+        "RAG",
+        "SearXNG",
+        "Kotlin",
+        "Odoo",
+        "React",
+        "SQL"
+      ]
+    },
+    {
+      "id": "ensolvers",
+      "role": "Software Engineer",
+      "company": "Ensolvers",
+      "companyInitials": "EN",
+      "logo": "/ensolvers_logo.jpeg",
+      "dates": "Jun 2022 – Feb 2023",
+      "status": null,
+      "highlights": [
+        "Connected multiple ERP systems to a Django REST Framework application, consolidating banking and financial data into a unified model for neural-network training.",
+        "Built a mobile application for music and audio content using Spring Boot, React Native, MySQL, AWS, and Elasticsearch.",
+        "Integrated audio-streaming providers and advertising platforms into a React Native application, contributing to a 50% increase in advertising revenue."
+      ],
+      "technologies": [
+        "Django",
+        "DRF",
+        "Spring Boot",
+        "React Native",
+        "MySQL",
+        "AWS",
+        "Elasticsearch"
+      ]
+    },
+    {
+      "id": "iobep",
+      "role": "Python Developer",
+      "company": "iOBEP",
+      "companyInitials": "IO",
+      "logo": "/iOBEP_logo.jpeg",
+      "dates": "Feb 2021 – May 2022",
+      "status": null,
+      "highlights": [
+        "Built data-ingestion and processing workflows using Python and JavaScript.",
+        "Collected, cleaned, and normalized data from multiple sources.",
+        "Automated database-loading workflows to create a repeatable pipeline for ongoing data ingestion."
+      ],
+      "technologies": [
+        "Python",
+        "JavaScript",
+        "ETL",
+        "Data Processing"
+      ]
+    },
+    {
+      "id": "cujae-research-assistant",
+      "role": "Research Assistant",
+      "company": "Technological University of Havana (CUJAE)",
+      "companyInitials": "CU",
+      "logo": "/cujaeredsocial_logo.jpeg",
+      "dates": "Jan 2020 – Feb 2021",
+      "status": null,
+      "highlights": [
+        "Developed KNIME workflows for data processing and data mining to support tutor–student assignments.",
+        "Analyzed EEC data in Python, applying clustering techniques to identify groups and patterns."
+      ],
+      "technologies": [
+        "KNIME",
+        "Python",
+        "Data Mining",
+        "Clustering"
+      ]
+    }
+  ],
+  "education": [
+    {
+      "id": "cujae",
+      "qualification": null,
+      "institution": "Technological University of Havana “Jose Antonio Echeverría” (CUJAE)",
+      "institutionInitials": "CU",
+      "logo": "/cujaeredsocial_logo.jpeg",
+      "dates": "Sep 2018 – Aug 2022",
+      "status": null,
+      "highlights": [
+        "Member of the Data Mining and Artificial Intelligence Research Group."
+      ],
+      "subjects": [
+        "Data Mining",
+        "Artificial Intelligence"
+      ]
+    }
+  ]
+}

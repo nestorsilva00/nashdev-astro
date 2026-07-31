@@ -6,6 +6,10 @@ import {
 } from "../../core/chat/config";
 import { createChatProvider } from "../../core/chat/provider";
 import { ChatProviderError } from "../../core/chat/errors";
+import {
+  addProfileContext,
+  loadProfileContext,
+} from "../../core/chat/profile-context";
 import type { WorkersAiBinding } from "../../core/chat/providers/cloudflare-workers-ai";
 import type {
   ChatApiError,
@@ -101,6 +105,7 @@ export const POST: APIRoute = async ({ request }) => {
   try {
     const runtimeEnvironment = env as unknown as Record<string, unknown>;
     const config = getChatConfig(runtimeEnvironment);
+    const profileContext = await loadProfileContext();
     const provider = createChatProvider(config, {
       cloudflareAi: runtimeEnvironment.AI as WorkersAiBinding | undefined,
     });
@@ -111,7 +116,10 @@ export const POST: APIRoute = async ({ request }) => {
       const completion = await Promise.race([
         provider.complete({
           messages,
-          systemPrompt: config.systemPrompt,
+          systemPrompt: addProfileContext(
+            config.systemPrompt,
+            profileContext,
+          ),
           temperature: config.temperature,
           maxTokens: config.maxTokens,
           signal: controller.signal,
