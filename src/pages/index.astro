@@ -10,28 +10,6 @@ import { SITE_DESCRIPTION, SITE_TITLE } from "../consts";
 const recentPosts = (await getCollection("blog"))
   .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
   .slice(0, 3);
-
-// Replace these placeholders with links and details from your social analytics.
-const socialPosts = [
-  {
-    platform: "LinkedIn",
-    platformMark: "in",
-    title: "Add your most visited LinkedIn post",
-    description:
-      "Use this space for a short preview of the idea, lesson, or story shared in the post.",
-    href: "https://www.linkedin.com/in/nestorsilvahernandez/recent-activity/all/",
-    metric: "Add views",
-  },
-  {
-    platform: "X",
-    platformMark: "𝕏",
-    title: "Add your most visited social post",
-    description:
-      "Summarize the post in one or two lines so visitors know why it is worth reading.",
-    href: "https://twitter.com/astrodotbuild",
-    metric: "Add views",
-  },
-];
 ---
 
 <!doctype html>
@@ -390,47 +368,6 @@ const socialPosts = [
                   </div>
                   <h2 class="post-title">{post.data.title}</h2>
                   <p class="post-description">{post.data.description}</p>
-                </a>
-              </li>
-            ))
-          }
-        </ol>
-      </section>
-
-      <section
-        class="home-section"
-        id="social-posts"
-        aria-labelledby="social-posts-title"
-      >
-        <div class="section-heading" data-reveal>
-          <div>
-            <p class="section-eyebrow">// Around the web</p>
-            <h2 id="social-posts-title">Most visited social posts</h2>
-          </div>
-        </div>
-
-        <ol class="social-posts">
-          {
-            socialPosts.map((post) => (
-              <li data-reveal>
-                <a
-                  class="social-post-link"
-                  href={post.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <span class="platform-mark" aria-hidden="true">
-                    {post.platformMark}
-                  </span>
-                  <div class="social-post-content">
-                    <p class="social-post-meta">
-                      <span>{post.platform}</span>
-                      <span>{post.metric}</span>
-                    </p>
-                    <h3 class="social-post-title">{post.title}</h3>
-                    <p class="social-post-description">{post.description}</p>
-                  </div>
-                  <span class="social-post-arrow" aria-hidden="true">↗</span>
                 </a>
               </li>
             ))
