@@ -3,6 +3,9 @@ dist/
 # generated types
 .astro/
 
+# local Cloudflare/Wrangler state
+.wrangler/
+
 # dependencies
 node_modules/
 .pnpm-store/
