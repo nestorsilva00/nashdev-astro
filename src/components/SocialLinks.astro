@@ -1,0 +1,97 @@
+---
+interface Props {
+  variant: "header" | "footer";
+}
+
+const { variant } = Astro.props;
+
+const socialLinks = [
+  {
+    href: "https://www.linkedin.com/in/nestorsilvahernandez/",
+    label: "Visit LinkedIn",
+    viewBox: "0 0 24 24",
+    path: "M20.45 20.45h-3.56v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.34V8.98h3.42v1.57h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.29zM5.32 7.41a2.07 2.07 0 1 1 0-4.14 2.07 2.07 0 0 1 0 4.14zm1.78 13.04H3.54V8.98H7.1v11.47z",
+  },
+  {
+    href: "https://x.com/NestorSilva25",
+    label: "Follow me on X",
+    viewBox: "0 0 24 24",
+    path: "M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z",
+  },
+  {
+    href: "https://github.com/nestorsilva00",
+    label: "Go to my GitHub profile",
+    viewBox: "0 0 16 16",
+    path: "M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z",
+  },
+];
+---
+
+<div class:list={["social-links", `social-links--${variant}`]}>
+  {
+    socialLinks.map((link) => (
+      <a href={link.href} target="_blank" rel="noopener noreferrer">
+        <span class="sr-only">{link.label}</span>
+        <svg viewBox={link.viewBox} aria-hidden="true">
+          <path fill="currentColor" d={link.path} />
+        </svg>
+      </a>
+    ))
+  }
+</div>
+
+<style>
+  .social-links {
+    display: flex;
+    align-items: center;
+  }
+  .social-links a {
+    color: var(--color-text-secondary);
+    text-decoration: none;
+  }
+  .social-links svg {
+    display: block;
+  }
+  .social-links--header {
+    gap: var(--header-icon-gap);
+  }
+  .social-links--header a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--header-control-size);
+    height: var(--header-control-size);
+    background: transparent;
+    border-radius: 50%;
+    transition:
+      color 150ms ease,
+      background-color 150ms ease,
+      transform 200ms ease;
+  }
+  .social-links--header a:hover {
+    color: var(--color-text-strong);
+    background: var(--color-surface-hover);
+    transform: scale(1.1);
+  }
+  .social-links--header svg {
+    width: 1.125rem;
+    height: 1.125rem;
+  }
+  .social-links--footer {
+    justify-content: center;
+    gap: 1em;
+    margin-top: 1em;
+  }
+  .social-links--footer a:hover {
+    color: var(--color-text);
+  }
+  .social-links--footer svg {
+    width: 2rem;
+    height: 2rem;
+  }
+  @media (max-width: 640px) {
+    .social-links--header {
+      display: none;
+    }
+  }
+</style>
