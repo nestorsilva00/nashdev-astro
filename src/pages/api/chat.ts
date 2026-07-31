@@ -3,16 +3,16 @@ import { env } from "cloudflare:workers";
 import {
   ChatConfigurationError,
   getChatConfig,
-} from "../../lib/chat/config";
-import { createChatProvider } from "../../lib/chat/provider";
-import { ChatProviderError } from "../../lib/chat/errors";
-import type { WorkersAiBinding } from "../../lib/chat/providers/cloudflare-workers-ai";
+} from "../../core/chat/config";
+import { createChatProvider } from "../../core/chat/provider";
+import { ChatProviderError } from "../../core/chat/errors";
+import type { WorkersAiBinding } from "../../core/chat/providers/cloudflare-workers-ai";
 import type {
   ChatApiError,
   ChatApiRequest,
   ChatApiResponse,
   ChatMessage,
-} from "../../lib/chat/types";
+} from "../../core/chat/types";
 
 export const prerender = false;
 

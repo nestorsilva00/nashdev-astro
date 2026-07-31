@@ -58,8 +58,8 @@ All commands are run from the root of the project, from a terminal:
 
 The chat UI sends the current in-memory conversation to `POST /api/chat`.
 The endpoint talks to a provider through the `ChatProvider` interface in
-`src/lib/chat/types.ts`; provider-specific request formats stay inside
-`src/lib/chat/providers/`.
+`src/core/chat/types.ts`; provider-specific request formats stay inside
+`src/core/chat/providers/`.
 
 ### Cloudflare Workers AI
 
@@ -92,8 +92,8 @@ other chat configuration are server-only and must never use Astro's `PUBLIC_`
 prefix.
 
 To add a provider with a different protocol, implement `ChatProvider` in
-`src/lib/chat/providers/`, add its configuration name in
-`src/lib/chat/config.ts`, and register it in `src/lib/chat/provider.ts`.
+`src/core/chat/providers/`, add its configuration name in
+`src/core/chat/config.ts`, and register it in `src/core/chat/provider.ts`.
 
 ## 👀 Want to learn more?
 
