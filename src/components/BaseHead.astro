@@ -28,14 +28,30 @@ const { title, description, image = FallbackImage } = Astro.props;
 
 		if (
 			navigationEntry instanceof PerformanceNavigationTiming &&
-			navigationEntry.type === 'reload'
+			navigationEntry.type === 'reload' &&
+			!window.location.hash
 		) {
 			history.scrollRestoration = 'manual';
+
+			const resetScroll = () => window.scrollTo(0, 0);
+			resetScroll();
+
+			window.addEventListener('pageshow', resetScroll, { once: true });
 			window.addEventListener(
-				'pageshow',
-				() => {
-					window.scrollTo(0, 0);
-					history.scrollRestoration = 'auto';
+				'load',
+				async () => {
+					if ('fonts' in document) {
+						await document.fonts.ready;
+					}
+
+					resetScroll();
+					requestAnimationFrame(() => {
+						resetScroll();
+						requestAnimationFrame(() => {
+							resetScroll();
+							history.scrollRestoration = 'auto';
+						});
+					});
 				},
 				{ once: true },
 			);
