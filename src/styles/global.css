@@ -68,10 +68,19 @@
 		0 8px 24px color-mix(in srgb, #000 38%, transparent),
 		0 16px 32px color-mix(in srgb, #000 34%, transparent);
 }
+
+html {
+	background-color: var(--color-background);
+	overscroll-behavior-y: none;
+}
+
 body {
+	min-height: 100vh;
+	min-height: 100dvh;
 	font-family: var(--font-atkinson);
 	margin: 0;
 	padding: 0;
+	overscroll-behavior-y: none;
 	text-align: left;
 	background: linear-gradient(var(--gradient-page-background)) no-repeat;
 	background-color: var(--color-background);

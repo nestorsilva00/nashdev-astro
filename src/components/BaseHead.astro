@@ -24,6 +24,26 @@ const { title, description, image = FallbackImage } = Astro.props;
 <meta name="theme-color" content="#ffffff" data-theme-color />
 <script is:inline>
 	(() => {
+		const navigationEntry = performance.getEntriesByType('navigation')[0];
+
+		if (
+			navigationEntry instanceof PerformanceNavigationTiming &&
+			navigationEntry.type === 'reload'
+		) {
+			history.scrollRestoration = 'manual';
+			window.addEventListener(
+				'pageshow',
+				() => {
+					window.scrollTo(0, 0);
+					history.scrollRestoration = 'auto';
+				},
+				{ once: true },
+			);
+		}
+	})();
+</script>
+<script is:inline>
+	(() => {
 		const storageKey = 'site-theme';
 		let theme = 'light';
 
