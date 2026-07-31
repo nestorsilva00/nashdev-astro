@@ -113,38 +113,64 @@ const { name, about, skillGroups, experience, education } = profileEntry.data;
       }
 
       .skill {
-        position: relative;
         display: flex;
         min-width: 0;
         align-items: center;
         gap: 0.75rem;
+        margin: -0.4rem;
+        padding: 0.4rem;
         color: var(--color-text);
+        background-color: transparent;
+        border-radius: 0.5rem;
+        box-shadow:
+          inset 0 0 0 1px transparent,
+          0 2px 8px transparent;
         font-size: 0.9rem;
         font-weight: 500;
         line-height: 1.25;
         transition:
-          color 160ms ease,
-          transform 160ms ease;
+          color 240ms var(--reveal-easing),
+          background-color 240ms var(--reveal-easing),
+          box-shadow 240ms var(--reveal-easing),
+          transform 240ms var(--reveal-easing);
       }
 
       .skill-logo {
-        position: relative;
-        z-index: 1;
         display: block;
         width: 2rem;
         height: 2rem;
         border-radius: 0;
         object-fit: contain;
-        transition: transform 160ms ease;
       }
 
       .skill-logo-frame {
-        position: relative;
         display: grid;
         width: 2rem;
         height: 2rem;
         flex: 0 0 2rem;
         place-items: center;
+        transition: transform 280ms var(--reveal-easing);
+      }
+
+      @media (hover: hover) and (pointer: fine) {
+        .skill:hover {
+          color: var(--color-text-strong);
+          background-color: color-mix(
+            in srgb,
+            var(--color-accent) 7%,
+            transparent
+          );
+          box-shadow:
+            inset 0 0 0 1px
+              color-mix(in srgb, var(--color-accent) 18%, transparent),
+            0 4px 12px
+              color-mix(in srgb, var(--color-accent) 10%, transparent);
+          transform: translateY(-1px);
+        }
+
+        .skill:hover .skill-logo-frame {
+          transform: scale(1.05);
+        }
       }
 
       .experience-list {
@@ -193,132 +219,6 @@ const { name, about, skillGroups, experience, education } = profileEntry.data;
         font-size: 0.75rem;
         font-weight: 700;
         letter-spacing: 0.04em;
-      }
-
-      @property --experience-trace-angle {
-        syntax: "<angle>";
-        inherits: false;
-        initial-value: 0deg;
-      }
-
-      .experience-logo::before,
-      .experience-logo::after {
-        position: absolute;
-        z-index: 3;
-        inset: -0.2rem;
-        padding: 4px;
-        background: conic-gradient(
-          from var(--experience-trace-angle),
-          transparent 0deg 285deg,
-          color-mix(in srgb, var(--color-primary) 65%, transparent) 305deg,
-          var(--color-primary) 324deg,
-          var(--color-accent) 338deg,
-          var(--color-primary) 350deg,
-          transparent 360deg
-        );
-        border-radius: 0.5rem;
-        content: "";
-        opacity: 0;
-        pointer-events: none;
-        transition: opacity 180ms ease;
-        -webkit-mask:
-          linear-gradient(#000 0 0) content-box,
-          linear-gradient(#000 0 0);
-        mask:
-          linear-gradient(#000 0 0) content-box,
-          linear-gradient(#000 0 0);
-        -webkit-mask-composite: xor;
-        mask-composite: exclude;
-      }
-
-      .experience-logo::before {
-        filter: blur(0.42rem) brightness(2);
-      }
-
-      .experience-logo::after {
-        filter: brightness(1.45)
-          drop-shadow(
-            0 0 0.14rem color-mix(in srgb, var(--color-accent) 85%, transparent)
-          );
-      }
-
-      .experience-entry:hover .experience-logo::before,
-      .experience-entry:hover .experience-logo::after {
-        animation: spin-experience-trace 1.5s linear infinite;
-        opacity: 1;
-      }
-
-      .experience-entry:hover .experience-logo::before {
-        opacity: 0.85;
-      }
-
-      @keyframes spin-experience-trace {
-        to {
-          --experience-trace-angle: 360deg;
-        }
-      }
-
-      @property --skill-trace-angle {
-        syntax: "<angle>";
-        inherits: false;
-        initial-value: 0deg;
-      }
-
-      .skill::before,
-      .skill::after {
-        position: absolute;
-        z-index: 3;
-        inset: -0.4rem;
-        padding: 1px;
-        background: conic-gradient(
-          from var(--skill-trace-angle),
-          transparent 0deg 285deg,
-          color-mix(in srgb, var(--color-primary) 65%, transparent) 305deg,
-          var(--color-primary) 324deg,
-          var(--color-accent) 338deg,
-          var(--color-primary) 350deg,
-          transparent 360deg
-        );
-        border-radius: 0.4rem;
-        content: "";
-        opacity: 0;
-        pointer-events: none;
-        transition: opacity 180ms ease;
-        -webkit-mask:
-          linear-gradient(#000 0 0) content-box,
-          linear-gradient(#000 0 0);
-        mask:
-          linear-gradient(#000 0 0) content-box,
-          linear-gradient(#000 0 0);
-        -webkit-mask-composite: xor;
-        mask-composite: exclude;
-      }
-
-      .skill::before {
-        filter: blur(0.42rem) brightness(2);
-      }
-
-      .skill::after {
-        filter: brightness(1.45)
-          drop-shadow(
-            0 0 0.14rem color-mix(in srgb, var(--color-accent) 85%, transparent)
-          );
-      }
-
-      .skill:hover::before,
-      .skill:hover::after {
-        animation: spin-skill-trace 1.4s linear infinite;
-        opacity: 1;
-      }
-
-      .skill:hover::before {
-        opacity: 0.85;
-      }
-
-      @keyframes spin-skill-trace {
-        to {
-          --skill-trace-angle: 360deg;
-        }
       }
 
       .experience-logo-initials {
@@ -518,35 +418,16 @@ const { name, about, skillGroups, experience, education } = profileEntry.data;
 
       @media (prefers-reduced-motion: reduce) {
         .skill,
-        .skill-logo {
+        .skill-logo-frame {
           transition: none;
         }
 
         .skill:hover,
-        .skill:hover .skill-logo {
+        .skill:hover .skill-logo-frame {
           transform: none;
         }
-
-        .experience-logo::before,
-        .experience-logo::after {
-          transition: none;
-        }
-
-        .experience-entry:hover .experience-logo::before,
-        .experience-entry:hover .experience-logo::after {
-          animation: none;
-        }
-
-        .skill::before,
-        .skill::after {
-          transition: none;
-        }
-
-        .skill:hover::before,
-        .skill:hover::after {
-          animation: none;
-        }
       }
+
     </style>
   </head>
   <body>
