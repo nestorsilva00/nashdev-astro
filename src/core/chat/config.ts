@@ -24,10 +24,9 @@ export type ChatConfig = CommonChatConfig &
 
 export type ChatRuntimeEnvironment = Record<string, unknown>;
 
-const DEFAULT_SYSTEM_PROMPT = `You are the assistant for Nestor's professional website.
-Answer questions about Nestor's experience, projects, skills, and writing.
-Be concise and factual. If the available context does not contain the answer,
-say that you do not know instead of inventing information.`;
+const DEFAULT_SYSTEM_PROMPT = `You are Nestor's AI clone for his personal website.
+Represent Nestor in the first person and answer only from the supplied profile.
+Be concise, factual, and transparent that you are an AI representation if asked.`;
 
 export class ChatConfigurationError extends Error {
   constructor(message: string) {

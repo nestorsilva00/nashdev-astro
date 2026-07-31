@@ -21,8 +21,8 @@ import type {
 export const prerender = false;
 
 const MAX_MESSAGES = 20;
-const MAX_MESSAGE_LENGTH = 2_000;
-const MAX_TOTAL_LENGTH = 12_000;
+const MAX_MESSAGE_LENGTH = 24_000;
+const MAX_TOTAL_LENGTH = 60_000;
 
 const json = (
   body: ChatApiResponse | ChatApiError,
@@ -96,7 +96,7 @@ export const POST: APIRoute = async ({ request }) => {
     return json(
       {
         error:
-          "Send 1–20 valid messages, ending with a user message. Each message may contain up to 2,000 characters.",
+          "Send 1–20 valid messages, ending with a user message. Each message may contain up to 24,000 characters and the conversation up to 60,000 characters.",
       },
       400,
     );
