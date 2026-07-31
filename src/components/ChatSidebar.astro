@@ -93,8 +93,8 @@
   };
 
   const sidebar = document.querySelector<HTMLElement>("[data-chat-sidebar]");
-  const toggle =
-    document.querySelector<HTMLButtonElement>("[data-chat-toggle]");
+  const toggles =
+    document.querySelectorAll<HTMLButtonElement>("[data-chat-toggle]");
   const closeButton =
     sidebar?.querySelector<HTMLButtonElement>("[data-chat-close]");
   const form = sidebar?.querySelector<HTMLFormElement>("[data-chat-form]");
@@ -113,26 +113,32 @@
 
   const isOpen = () => document.documentElement.dataset.chatOpen === "true";
 
-  const setOpen = (open: boolean) => {
-    if (!sidebar || !toggle) return;
+  const setOpen = (open: boolean, trigger?: HTMLButtonElement) => {
+    if (!sidebar || toggles.length === 0) return;
 
     document.documentElement.dataset.chatOpen = String(open);
-    toggle.setAttribute("aria-expanded", String(open));
-    toggle.setAttribute(
-      "aria-label",
-      open ? "Close Ask Nestor" : "Open Ask Nestor",
-    );
+    toggles.forEach((toggle) => {
+      toggle.setAttribute("aria-expanded", String(open));
+      toggle.setAttribute(
+        "aria-label",
+        open ? "Close Ask Nestor" : "Open Ask Nestor",
+      );
+    });
     sidebar.setAttribute("aria-hidden", String(!open));
     sidebar.inert = !open;
 
     if (open) {
       lastFocusedElement =
-        document.activeElement instanceof HTMLElement
+        trigger ??
+        (document.activeElement instanceof HTMLElement
           ? document.activeElement
-          : toggle;
+          : toggles.item(0));
       window.setTimeout(() => input?.focus(), 180);
     } else {
-      window.setTimeout(() => (lastFocusedElement ?? toggle).focus(), 140);
+      window.setTimeout(
+        () => (lastFocusedElement ?? toggles.item(0))?.focus(),
+        140,
+      );
     }
   };
 
@@ -226,7 +232,9 @@
     }
   };
 
-  toggle?.addEventListener("click", () => setOpen(!isOpen()));
+  toggles.forEach((toggle) => {
+    toggle.addEventListener("click", () => setOpen(!isOpen(), toggle));
+  });
   closeButton?.addEventListener("click", () => setOpen(false));
 
   input?.addEventListener("input", () => {

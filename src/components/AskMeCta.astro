@@ -1,0 +1,138 @@
+---
+interface Props {
+  class?: string;
+  description?: string;
+  headingLevel?: "h1" | "h2" | "h3";
+  id?: string;
+  title?: string;
+}
+
+const {
+  class: className,
+  description =
+    "Ask my AI clone about my experience, skills, projects, or fit for your role.",
+  headingLevel = "h2",
+  id = "ask-nestor-cta-title",
+  title = "Curious about my work?",
+} = Astro.props;
+
+const Heading = headingLevel;
+---
+
+<section
+  class:list={["ask-nestor-cta", className]}
+  aria-labelledby={id}
+  data-reveal
+>
+  <div class="ask-nestor-copy">
+    <Heading class="ask-nestor-title" id={id}>{title}</Heading>
+    <p class="ask-nestor-description">{description}</p>
+  </div>
+  <button
+    class="ask-nestor-action"
+    type="button"
+    aria-label="Open Ask Nestor"
+    aria-controls="chat-panel"
+    aria-expanded="false"
+    data-chat-toggle
+  >
+    ✦ Ask Nestor
+  </button>
+</section>
+
+<style>
+  .ask-nestor-cta {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 2rem;
+    align-items: center;
+    padding: 1rem 0.25rem;
+    border-block: 1px solid var(--color-border-light);
+  }
+
+  .ask-nestor-copy {
+    min-width: 0;
+    max-width: 36rem;
+  }
+
+  .ask-nestor-title {
+    margin: 0;
+    color: var(--color-text);
+    font-size: 1.2rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    line-height: 1.35;
+  }
+
+  .ask-nestor-description {
+    margin: 0.25rem 0 0;
+    color: var(--color-text-secondary);
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
+
+  .ask-nestor-action {
+    display: inline-flex;
+    flex: 0 0 auto;
+    align-items: center;
+    justify-content: center;
+    min-height: 2.25rem;
+    margin-right: 0.3rem;
+    padding: 0.45rem 0.65rem;
+    color: var(--color-primary);
+    background: transparent;
+    border: 0;
+    border-radius: 0.45rem;
+    font: inherit;
+    font-size: 1.1rem;
+    font-weight: 700;
+    white-space: nowrap;
+    cursor: pointer;
+    transition:
+      color 160ms ease,
+      background-color 160ms ease,
+      transform 160ms ease;
+  }
+
+  .ask-nestor-action:hover {
+    color: var(--color-text);
+    background: var(--color-surface-strong);
+    transform: translateX(0.15rem);
+  }
+
+  .ask-nestor-action:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 3px;
+  }
+
+  @media (max-width: 520px) {
+    .ask-nestor-cta {
+      gap: 0.75rem;
+      padding: 0.85rem 0.2rem;
+    }
+
+    .ask-nestor-title {
+      font-size: 0.95rem;
+    }
+
+    .ask-nestor-description,
+    .ask-nestor-action {
+      font-size: 0.82rem;
+    }
+
+    .ask-nestor-action {
+      margin-right: 0.2rem;
+      padding-inline: 0.5rem;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .ask-nestor-action {
+      transition: none;
+    }
+
+    .ask-nestor-action:hover {
+      transform: none;
+    }
+  }
+</style>

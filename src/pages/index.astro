@@ -1,6 +1,7 @@
 ---
 import { Image } from "astro:assets";
 import { getCollection } from "astro:content";
+import AskMeCta from "../components/AskMeCta.astro";
 import BaseHead from "../components/BaseHead.astro";
 import Footer from "../components/Footer.astro";
 import FormattedDate from "../components/FormattedDate.astro";
@@ -23,6 +24,10 @@ const recentPosts = (await getCollection("blog"))
 
       .home-section + .home-section {
         margin-top: 5rem;
+      }
+
+      :global(.home-chat-cta) + .home-section {
+        margin-top: 2.5rem;
       }
 
       .section-heading {
@@ -285,6 +290,10 @@ const recentPosts = (await getCollection("blog"))
           margin-top: 3.75rem;
         }
 
+        :global(.home-chat-cta) + .home-section {
+          margin-top: 2rem;
+        }
+
         .section-heading {
           align-items: center;
           margin-bottom: 1.25rem;
@@ -327,6 +336,11 @@ const recentPosts = (await getCollection("blog"))
   <body>
     <Header />
     <main>
+      <AskMeCta
+        class="home-section home-chat-cta"
+        headingLevel="h1"
+      />
+
       <section
         class="home-section"
         id="recent-posts"
@@ -335,7 +349,7 @@ const recentPosts = (await getCollection("blog"))
         <div class="section-heading" data-reveal>
           <div>
             <p class="section-eyebrow">// From the blog</p>
-            <h1 id="recent-posts-title">Recent posts</h1>
+            <h2 id="recent-posts-title">Recent posts</h2>
           </div>
           <a class="section-link" href="/blog">
             View all
@@ -366,7 +380,7 @@ const recentPosts = (await getCollection("blog"))
                       <span class="post-tag">{post.data.tags[0]}</span>
                     )}
                   </div>
-                  <h2 class="post-title">{post.data.title}</h2>
+                  <h3 class="post-title">{post.data.title}</h3>
                   <p class="post-description">{post.data.description}</p>
                 </a>
               </li>
