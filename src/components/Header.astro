@@ -154,7 +154,9 @@ const currentSection =
       }
 
       const waitForTransition = () => {
-        if (Number.parseFloat(window.getComputedStyle(header).opacity) >= 0.99) {
+        if (
+          Number.parseFloat(window.getComputedStyle(header).opacity) >= 0.99
+        ) {
           scheduleTyping();
           return;
         }
@@ -323,7 +325,7 @@ const currentSection =
     height: 1rem;
     margin-left: 0.125rem;
     background: var(--color-accent);
-    animation: blink 1.05s steps(2, end) infinite;
+    animation: blink 0.9s steps(2, end) infinite;
   }
   @keyframes blink {
     50% {
