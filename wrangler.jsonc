@@ -9,7 +9,8 @@
     "directory": "./dist"
   },
   "ai": {
-    "binding": "AI"
+    "binding": "AI",
+    "remote": true
   },
   "vars": {
     "CHAT_PROVIDER": "cloudflare-workers-ai",
