@@ -3,7 +3,7 @@
   "name": "Nestor Silva",
   "headline": "Backend-focused senior software engineer",
   "about": [
-    "Hi, I’m Nestor, a backend-focused senior software engineer with more than five years of experience building scalable systems, APIs, enterprise applications, automation, and data-driven products. My strongest background is in Python, but I also work across Kotlin, TypeScript, Java, and React when a solution calls for it.",
+    "Hi, I’m Nestor, a backend-focused senior software engineer with more than six years of experience building scalable systems, APIs, enterprise applications, automation, and data-driven products. My strongest background is in Python, but I also work across Kotlin, TypeScript, Java, and React when a solution calls for it.",
     "I care as much about the product as I do about the code. Good technical decisions begin with understanding the problem, the users, the business context, and the trade-offs. I enjoy solving difficult problems and finding simpler, more efficient ways to deliver useful, reliable software.",
     "AI-powered systems are now one of my main areas of focus. I build practical, production-ready solutions with technologies including Python, FastAPI, React, REST APIs, AWS, Docker, Odoo, PostgreSQL, and TypeScript, applying AI where it creates measurable value rather than adding complexity for its own sake.",
     "I’m currently open to Software Engineer, Backend Engineer, and AI Engineer opportunities that include relocation."
@@ -151,7 +151,7 @@
         },
         {
           "name": "Codex",
-          "logo": "https://cdn.simpleicons.org/openai/412991"
+          "logo": "/codex.svg"
         },
         {
           "name": "Claude",
