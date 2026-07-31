@@ -128,7 +128,77 @@ const currentSection =
       }
     };
 
-    window.setTimeout(typeCharacter, 260);
+    typeCharacter();
+  };
+
+  const startTypingWhenReady = () => {
+    if (!currentPath) return;
+
+    const header = currentPath.closest("header");
+    let typingScheduled = false;
+
+    const scheduleTyping = () => {
+      if (typingScheduled) return;
+
+      typingScheduled = true;
+      window.setTimeout(typeCurrentPath, 180);
+    };
+
+    const waitForHeaderReveal = () => {
+      if (
+        !header ||
+        !document.documentElement.classList.contains("reveal-enabled")
+      ) {
+        scheduleTyping();
+        return;
+      }
+
+      const waitForTransition = () => {
+        if (Number.parseFloat(window.getComputedStyle(header).opacity) >= 0.99) {
+          scheduleTyping();
+          return;
+        }
+
+        const fallback = window.setTimeout(scheduleTyping, 900);
+        header.addEventListener(
+          "transitionend",
+          () => {
+            window.clearTimeout(fallback);
+            scheduleTyping();
+          },
+          { once: true },
+        );
+      };
+
+      if (header.classList.contains("is-revealed")) {
+        waitForTransition();
+        return;
+      }
+
+      const revealObserver = new MutationObserver(() => {
+        if (!header.classList.contains("is-revealed")) return;
+
+        revealObserver.disconnect();
+        waitForTransition();
+      });
+
+      revealObserver.observe(header, {
+        attributes: true,
+        attributeFilter: ["class"],
+      });
+    };
+
+    const startAfterPaint = () => {
+      window.requestAnimationFrame(() => {
+        window.requestAnimationFrame(waitForHeaderReveal);
+      });
+    };
+
+    if (document.readyState === "complete") {
+      startAfterPaint();
+    } else {
+      window.addEventListener("load", startAfterPaint, { once: true });
+    }
   };
 
   const closeMenu = () => {
@@ -181,7 +251,7 @@ const currentSection =
   });
 
   updateThemeToggle();
-  typeCurrentPath();
+  startTypingWhenReady();
 </script>
 
 <style>
