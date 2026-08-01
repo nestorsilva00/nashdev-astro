@@ -99,7 +99,7 @@ const recentPosts = (await getCollection("blog"))
       .post-media {
         display: block;
         overflow: hidden;
-        aspect-ratio: 16 / 10;
+        aspect-ratio: 2 / 1;
         margin-bottom: 1rem;
         background: var(--color-background-secondary);
         border-radius: 0.75rem;
@@ -367,7 +367,7 @@ const recentPosts = (await getCollection("blog"))
                       <Image
                         src={post.data.heroImage}
                         width={640}
-                        height={400}
+                        height={320}
                         alt=""
                       />
                     ) : (
