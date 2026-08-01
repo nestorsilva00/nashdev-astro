@@ -6,21 +6,16 @@ import Footer from "../../components/Footer.astro";
 import FormattedDate from "../../components/FormattedDate.astro";
 import Header from "../../components/Header.astro";
 import { SITE_DESCRIPTION, SITE_TITLE } from "../../consts";
+import { getReadingTime } from "../../core/blog/reading-time";
 
 export async function getStaticPaths({ paginate }) {
-  const wordsPerMinute = 200;
   const postsPerPage = 4;
   const posts = (await getCollection("blog"))
     .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
-    .map((post) => {
-      const wordCount =
-        post.body?.trim().split(/\s+/).filter(Boolean).length ?? 0;
-
-      return {
-        ...post,
-        readingTime: Math.max(1, Math.ceil(wordCount / wordsPerMinute)),
-      };
-    });
+    .map((post) => ({
+      ...post,
+      readingTime: getReadingTime(post.body),
+    }));
 
   return paginate(posts, { pageSize: postsPerPage });
 }
@@ -218,8 +213,6 @@ const pageTitle =
       .posts[data-view="grid"] .post-meta {
         margin-top: 0.35rem;
       }
-      .posts[data-view="grid"] .reading-time,
-      .posts[data-view="grid"] .meta-separator,
       .posts[data-view="grid"] .post-description,
       .posts[data-view="grid"] .tag-list {
         display: none;
